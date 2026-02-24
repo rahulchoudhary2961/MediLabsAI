@@ -30,6 +30,8 @@ import { motion, AnimatePresence } from 'motion/react';
 const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
 const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
 const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+import healthcareWorkingImages from "../src/assets/working-doctor.jpg";
+import hospitalImage from "../src/assets/national-cancer-institute-hospital.jpg"
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -195,11 +197,10 @@ const About = () => {
           >
             <div className="aspect-square rounded-3xl overflow-hidden border border-zinc-800 bg-zinc-900 relative">
               <img
-                src="https://picsum.photos/seed/healthcare-tech/800/800"
-                alt="Healthcare Technology"
-                className="w-full h-full object-cover opacity-60 grayscale hover:grayscale-0 transition-all duration-700"
-                referrerPolicy="no-referrer"
-              />
+  src={healthcareWorkingImages}
+  alt="Healthcare Technology"
+  className="w-full h-full object-cover opacity-60 grayscale hover:grayscale-0 transition-all duration-700"
+/>
               <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-transparent"></div>
               <div className="absolute bottom-8 left-8 right-8 p-6 bg-zinc-900/80 backdrop-blur-md border border-zinc-700 rounded-2xl">
                 <div className="flex items-center gap-4 mb-3">
@@ -335,7 +336,7 @@ const FeaturedSolution = () => {
             </div>
             <div className="relative h-full min-h-[400px] bg-zinc-800">
               <img
-                src="https://picsum.photos/seed/ai-medical/1000/1000"
+                src={hospitalImage}
                 alt="AI Medical Documentation"
                 className="absolute inset-0 w-full h-full object-cover opacity-50"
                 referrerPolicy="no-referrer"
