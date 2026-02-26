@@ -521,7 +521,7 @@ const CaseStudy = () => {
     <section className="py-24 bg-zinc-950 border-t border-zinc-900">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-16">
-          <h2 className="text-3xl font-bold text-white mb-4">Sample Project</h2>
+          <h2 className="text-3xl font-bold text-white mb-4">Our Products</h2>
           <p className="text-zinc-400">Real-world impact of our technology solutions.</p>
         </div>
         <div className="max-w-4xl mx-auto p-8 md:p-12 rounded-3xl bg-zinc-900 border border-zinc-800">
