@@ -802,13 +802,13 @@ const Footer = () => {
             <h4 className="text-white font-bold mb-6">Contact</h4>
             <ul className="space-y-4">
               <li className="text-zinc-500">Bhubaneswar, India</li>
-              <li className="text-zinc-500">rahulchoudhary4526@gmail.com</li>
+              <li className="text-zinc-500">medilabsai.health@gmail.com</li>
               <li className="text-zinc-500">+91 (79) 7841-2095</li>
             </ul>
           </div>
         </div>
         <div className="pt-8 border-t border-zinc-900 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-zinc-600 text-sm">© 2026 MediLabs AI. All rights reserved.</p>
+          <p className="text-zinc-600 text-sm">© 2025 MediLabsAI. All rights reserved.</p>
           <div className="flex gap-8">
             <a href="#" className="text-zinc-600 text-xs hover:text-zinc-400">Privacy Policy</a>
             <a href="#" className="text-zinc-600 text-xs hover:text-zinc-400">Terms of Service</a>
