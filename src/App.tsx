@@ -3,35 +3,109 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from "react";
 import emailjs from "@emailjs/browser";
 import {
-  Stethoscope,
-  Mic,
-  ShieldCheck,
-  Cloud,
-  Database,
-  Users,
   Activity,
-  ChevronRight,
-  Menu,
-  X,
-  CheckCircle2,
   ArrowRight,
+  BellRing,
+  Building2,
+  CheckCircle2,
+  ChevronRight,
+  ClipboardList,
   Globe,
   Lock,
-  Zap,
-  Hospital,
-  Building2,
-  Microscope,
-  Rocket
-} from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
+  Menu,
+  ShieldCheck,
+  Sparkles,
+  Stethoscope,
+  TrendingUp,
+  Users,
+  X,
+} from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
+import healthcareWorkingImages from "../src/assets/working-doctor.jpg";
+import hospitalImage from "../src/assets/national-cancer-institute-hospital.jpg";
+
 const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
 const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
 const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
-import healthcareWorkingImages from "../src/assets/working-doctor.jpg";
-import hospitalImage from "../src/assets/national-cancer-institute-hospital.jpg"
+
+const productCards = [
+  {
+    name: "MedSyra",
+    label: "Care Operations Platform",
+    description:
+      "Runs appointments, billing, records, follow-ups, and daily operational workflows in one connected system.",
+    highlights: [
+      "Appointments, billing, and reminders",
+      "Medical records and operational dashboards",
+      "Built for small to mid-sized clinics",
+    ],
+    icon: <ClipboardList className="w-6 h-6" />,
+  },
+  {
+    name: "MediScope",
+    label: "AI Operational Assistant",
+    description:
+      "Turns operational signals into a short, prioritized action list so teams know what needs attention next.",
+    highlights: [
+      "Missed follow-up prompts",
+      "Inventory expiry and timing alerts",
+      "Action-first clinic recommendations",
+    ],
+    icon: <Sparkles className="w-6 h-6" />,
+  },
+  {
+    name: "ClinicIQ",
+    label: "Operational Intelligence and Monitoring",
+    description:
+      "Surfaces unusual drops and spikes in patient flow, revenue, and medicine movement before teams have to dig through reports.",
+    highlights: [
+      "Daily and weekly trend visibility",
+      "Automatic anomaly detection",
+      "Critical operational alerts",
+    ],
+    icon: <BellRing className="w-6 h-6" />,
+  },
+];
+
+const impactPoints = [
+  "Reduce manual coordination across daily healthcare workflows",
+  "Surface follow-up gaps, delays, and operational risk earlier",
+  "Help frontline teams spend more time on patient-facing work",
+  "Give leaders clearer visibility into performance and bottlenecks",
+];
+
+const platformPillars = [
+  {
+    title: "Built for Daily Healthcare Operations",
+    desc: "The platform is designed for real front-desk, billing, pharmacy, and management work, not just presentation dashboards.",
+    icon: <Stethoscope className="w-6 h-6" />,
+  },
+  {
+    title: "Practical Workflow Coverage",
+    desc: "Appointments, records, follow-ups, stock awareness, and operational alerts are covered in a way teams can actually use every day.",
+    icon: <Activity className="w-6 h-6" />,
+  },
+  {
+    title: "Action Over Reports",
+    desc: "Instead of making teams search through reports, the system helps them act faster on follow-ups, exceptions, and workflow bottlenecks.",
+    icon: <TrendingUp className="w-6 h-6" />,
+  },
+  {
+    title: "Secure by Design",
+    desc: "Role-based access, cloud-ready deployment, and privacy-conscious workflows support clinics, pharmacies, and hospitals handling sensitive data.",
+    icon: <Lock className="w-6 h-6" />,
+  },
+];
+
+const useCases = [
+  "Clinics managing appointments, billing, patient records, and follow-ups",
+  "Pharmacies tracking medicine movement, expiry risk, and daily operations",
+  "Hospitals needing clearer operational visibility across teams and branches",
+  "Healthcare businesses replacing spreadsheets, registers, and manual follow-up work",
+];
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -39,57 +113,67 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const navLinks = [
-    { name: 'About', href: '#about' },
-    { name: 'Services', href: '#services' },
-    { name: 'Solutions', href: '#solutions' },
-    { name: 'Contact', href: '#contact' },
+    { name: "About", href: "#about" },
+    { name: "Products", href: "#products" },
+    { name: "Platform", href: "#platform" },
+    { name: "Contact", href: "#contact" },
   ];
 
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-zinc-950/90 backdrop-blur-md border-b border-zinc-800 py-3' : 'bg-transparent py-5'}`}>
-      <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
+    <nav
+      className={`fixed z-50 w-full transition-all duration-300 ${
+        scrolled
+          ? "border-b border-zinc-800 bg-zinc-950/90 py-3 backdrop-blur-md"
+          : "bg-transparent py-5"
+      }`}
+    >
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-6">
         <div className="flex items-center gap-2">
-          <div className="w-10 h-10 bg-emerald-600 rounded-lg flex items-center justify-center">
-            <Stethoscope className="text-white w-6 h-6" />
+          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-600">
+            <Stethoscope className="h-6 w-6 text-white" />
           </div>
-          <span className="text-xl font-bold tracking-tight text-white">MediLabs<span className="text-emerald-500">AI</span></span>
+          <span className="text-xl font-bold tracking-tight text-white">
+            MediLabs<span className="text-emerald-500">AI</span>
+          </span>
         </div>
 
-        {/* Desktop Nav */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden items-center gap-8 md:flex">
           {navLinks.map((link) => (
-            <a key={link.name} href={link.href} className="text-sm font-medium text-zinc-400 hover:text-emerald-400 transition-colors">
+            <a
+              key={link.name}
+              href={link.href}
+              className="text-sm font-medium text-zinc-400 transition-colors hover:text-emerald-400"
+            >
               {link.name}
             </a>
           ))}
-          <button className="bg-emerald-600 hover:bg-emerald-500 text-white px-5 py-2.5 rounded-full text-sm font-semibold transition-all shadow-lg shadow-emerald-900/20">
-            <a href="#contact">
-              Schedule a Consultation
-            </a>
-          </button>
+          <a
+            href="#contact"
+            className="rounded-full bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-emerald-900/20 transition-all hover:bg-emerald-500"
+          >
+            Book a Demo
+          </a>
         </div>
 
-        {/* Mobile Toggle */}
-        <button className="md:hidden text-zinc-400" onClick={() => setIsOpen(!isOpen)}>
+        <button className="text-zinc-400 md:hidden" onClick={() => setIsOpen(!isOpen)}>
           {isOpen ? <X /> : <Menu />}
         </button>
       </div>
 
-      {/* Mobile Nav */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
+            animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-zinc-900 border-b border-zinc-800 overflow-hidden"
+            className="overflow-hidden border-b border-zinc-800 bg-zinc-900 md:hidden"
           >
-            <div className="px-6 py-8 flex flex-col gap-6">
+            <div className="flex flex-col gap-6 px-6 py-8">
               {navLinks.map((link) => (
                 <a
                   key={link.name}
@@ -100,11 +184,13 @@ const Navbar = () => {
                   {link.name}
                 </a>
               ))}
-              <button className="bg-emerald-600 text-white px-5 py-3 rounded-xl text-center font-semibold">
-                <a href="#contact">
-                  Schedule a Consultation
-                </a>
-              </button>
+              <a
+                href="#contact"
+                className="rounded-xl bg-emerald-600 px-5 py-3 text-center font-semibold text-white"
+                onClick={() => setIsOpen(false)}
+              >
+                Book a Demo
+              </a>
             </div>
           </motion.div>
         )}
@@ -115,39 +201,75 @@ const Navbar = () => {
 
 const Hero = () => {
   return (
-    <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden bg-zinc-950">
-      {/* Background Accents */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full pointer-events-none">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-emerald-900/20 blur-[120px] rounded-full"></div>
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-900/10 blur-[120px] rounded-full"></div>
+    <section className="relative overflow-hidden bg-zinc-950 pb-20 pt-32 md:pb-32 md:pt-48">
+      <div className="pointer-events-none absolute left-1/2 top-0 h-full w-full -translate-x-1/2">
+        <div className="absolute left-[-10%] top-[-10%] h-[40%] w-[40%] rounded-full bg-emerald-900/20 blur-[120px]"></div>
+        <div className="absolute bottom-[-10%] right-[-10%] h-[40%] w-[40%] rounded-full bg-cyan-900/10 blur-[120px]"></div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="max-w-3xl">
+      <div className="relative z-10 mx-auto max-w-7xl px-6">
+        <div className="max-w-4xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <span className="inline-block px-4 py-1.5 rounded-full bg-emerald-950/50 border border-emerald-800/50 text-emerald-400 text-xs font-bold uppercase tracking-wider mb-6">
-              Healthcare Technology Specialists
+            <span className="mb-6 inline-block rounded-full border border-emerald-800/50 bg-emerald-950/50 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-emerald-400">
+              AI Operations Software for Healthcare Teams
             </span>
-            <h1 className="text-5xl md:text-7xl font-bold text-white leading-[1.1] mb-8 tracking-tight">
-              Precision AI for <span className="text-emerald-500">Modern Clinical</span> Excellence.
+            <h1 className="mb-8 text-5xl font-bold leading-[1.05] tracking-tight text-white md:text-7xl">
+              AI teammates for
+              <span className="block text-emerald-500">
+                clinics, pharmacies, and hospitals.
+              </span>
             </h1>
-            <p className="text-xl text-zinc-400 mb-10 leading-relaxed max-w-2xl">
-              We build secure, AI-powered documentation systems and custom software solutions designed for Indian healthcare providers, from independent clinics to multi-specialty hospitals.
+            <p className="mb-10 max-w-3xl text-xl leading-relaxed text-zinc-400">
+              MediLabsAI helps healthcare organizations automate repetitive
+              operational work, surface issues earlier, and keep frontline teams
+              focused on patients instead of manual coordination.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <button className="bg-emerald-600 hover:bg-emerald-500 text-white px-8 py-4 rounded-full text-lg font-semibold transition-all flex items-center justify-center gap-2 shadow-xl shadow-emerald-900/30 group">
-                <a href="#contact">
-                  Schedule a Consultation
-                </a>
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </button>
-              <button className="border border-zinc-700 hover:border-zinc-500 text-white px-8 py-4 rounded-full text-lg font-semibold transition-all flex items-center justify-center gap-2">
-                View Our Services
-              </button>
+
+            <div className="mb-12 flex flex-col gap-4 sm:flex-row">
+              <a
+                href="#products"
+                className="group flex items-center justify-center gap-2 rounded-full bg-emerald-600 px-8 py-4 text-lg font-semibold text-white shadow-xl shadow-emerald-900/30 transition-all hover:bg-emerald-500"
+              >
+                Explore the Products
+                <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+              </a>
+              <a
+                href="#contact"
+                className="flex items-center justify-center gap-2 rounded-full border border-zinc-700 px-8 py-4 text-lg font-semibold text-white transition-all hover:border-zinc-500"
+              >
+                Schedule a Consultation
+              </a>
+            </div>
+
+            <div className="grid gap-4 md:grid-cols-3">
+              {productCards.map((product) => (
+                <div
+                  key={product.name}
+                  className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-5"
+                >
+                  <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-600/10 text-emerald-500">
+                    {product.icon}
+                  </div>
+                  <div className="text-sm font-semibold uppercase tracking-[0.2em] text-zinc-500">
+                    {product.name}
+                  </div>
+                  <div className="mt-2 text-sm text-zinc-300">{product.label}</div>
+                </div>
+              ))}
+            </div>
+            <div className="mt-8 grid gap-4 md:grid-cols-2">
+              {impactPoints.map((point) => (
+                <div
+                  key={point}
+                  className="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-4 text-sm text-zinc-300"
+                >
+                  {point}
+                </div>
+              ))}
             </div>
           </motion.div>
         </div>
@@ -158,36 +280,51 @@ const Hero = () => {
 
 const About = () => {
   return (
-    <section id="about" className="py-24 bg-zinc-950 border-y border-zinc-900">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid md:grid-cols-2 gap-16 items-center">
+    <section id="about" className="border-y border-zinc-900 bg-zinc-950 py-24">
+      <div className="mx-auto max-w-7xl px-6">
+        <div className="grid items-center gap-16 md:grid-cols-2">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-              Bridging the Gap Between <br />
-              <span className="text-emerald-500">Medicine and Technology</span>
+            <h2 className="mb-6 text-3xl font-bold text-white md:text-4xl">
+              Built for healthcare teams that need to
+              <br />
+              <span className="text-emerald-500">
+                reduce admin burden and act faster
+              </span>
             </h2>
-            <p className="text-zinc-400 text-lg mb-6 leading-relaxed">
-              MediLabs AI specializes in developing high-performance technology for the healthcare sector. We understand that medical organizations require more than just "software"—they need reliable, secure, and intuitive tools that enhance patient care without adding administrative burden.
+            <p className="mb-6 text-lg leading-relaxed text-zinc-400">
+              Healthcare organizations lose time and money when appointments,
+              billing, stock movement, follow-ups, and daily performance are
+              managed across paper registers, spreadsheets, and disconnected
+              tools. MediLabsAI brings those workflows into focused products
+              designed to automate coordination and improve operational clarity.
             </p>
-            <p className="text-zinc-400 text-lg mb-8 leading-relaxed">
-              Our expertise lies at the intersection of AI, cloud infrastructure, and data security. We focus specifically on small to mid-sized healthcare organizations, providing them with the same level of technological sophistication typically reserved for large corporate hospital chains.
+            <p className="mb-8 text-lg leading-relaxed text-zinc-400">
+              Whether you run a clinic, a pharmacy operation, or a hospital team,
+              the goal stays the same: reduce missed work, improve visibility,
+              respond early to issues, and help staff work at the top of their
+              role instead of chasing scattered information.
             </p>
             <div className="grid grid-cols-2 gap-6">
-              <div className="p-4 rounded-2xl bg-zinc-900/50 border border-zinc-800">
-                <div className="text-emerald-500 font-bold text-2xl mb-1">AI-First</div>
-                <div className="text-zinc-500 text-sm">Intelligent automation for clinical workflows.</div>
+              <div className="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-4">
+                <div className="mb-1 text-2xl font-bold text-emerald-500">Less Manual Work</div>
+                <div className="text-sm text-zinc-500">
+                  Reduce repetitive coordination across appointments, billing, and follow-ups.
+                </div>
               </div>
-              <div className="p-4 rounded-2xl bg-zinc-900/50 border border-zinc-800">
-                <div className="text-emerald-500 font-bold text-2xl mb-1">Secure</div>
-                <div className="text-zinc-500 text-sm">Privacy-first architecture for medical data.</div>
+              <div className="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-4">
+                <div className="mb-1 text-2xl font-bold text-emerald-500">Earlier Intervention</div>
+                <div className="text-sm text-zinc-500">
+                  Spot issues earlier and act before they affect patients or revenue.
+                </div>
               </div>
             </div>
           </motion.div>
+
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -195,21 +332,24 @@ const About = () => {
             transition={{ duration: 0.6 }}
             className="relative"
           >
-            <div className="aspect-square rounded-3xl overflow-hidden border border-zinc-800 bg-zinc-900 relative">
+            <div className="relative aspect-square overflow-hidden rounded-3xl border border-zinc-800 bg-zinc-900">
               <img
-  src={healthcareWorkingImages}
-  alt="Healthcare Technology"
-  className="w-full h-full object-cover opacity-60 grayscale hover:grayscale-0 transition-all duration-700"
-/>
+                src={healthcareWorkingImages}
+                alt="Healthcare operations team"
+                className="h-full w-full object-cover opacity-60 grayscale transition-all duration-700 hover:grayscale-0"
+              />
               <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-transparent"></div>
-              <div className="absolute bottom-8 left-8 right-8 p-6 bg-zinc-900/80 backdrop-blur-md border border-zinc-700 rounded-2xl">
-                <div className="flex items-center gap-4 mb-3">
-                  <div className="w-12 h-12 bg-emerald-600/20 rounded-full flex items-center justify-center">
-                    <ShieldCheck className="text-emerald-500 w-6 h-6" />
+              <div className="absolute bottom-8 left-8 right-8 rounded-2xl border border-zinc-700 bg-zinc-900/80 p-6 backdrop-blur-md">
+                <div className="mb-3 flex items-center gap-4">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-emerald-600/20">
+                    <ShieldCheck className="h-6 w-6 text-emerald-500" />
                   </div>
-                  <div className="font-bold text-white">Compliance Guaranteed</div>
+                  <div className="font-bold text-white">Built for Frontline Workflows</div>
                 </div>
-                <p className="text-zinc-400 text-sm">Our systems are built to meet international and local data protection standards for healthcare information.</p>
+                <p className="text-sm text-zinc-400">
+                  Designed for teams handling patient flow, medicine movement,
+                  billing pressure, follow-ups, and everyday operational risk.
+                </p>
               </div>
             </div>
           </motion.div>
@@ -219,74 +359,52 @@ const About = () => {
   );
 };
 
-const Services = () => {
-  const services = [
-    {
-      title: "AI Clinical Documentation",
-      desc: "Automated transcription and structuring of patient encounters into clinical notes.",
-      benefit: "Reduces physician burnout and documentation time by up to 60%.",
-      icon: <Mic className="w-6 h-6" />
-    },
-    {
-      title: "Multilingual Voice-to-Text",
-      desc: "Voice recognition optimized for Indian accents and regional languages.",
-      benefit: "Enables natural patient interaction in local languages with accurate English summaries.",
-      icon: <Globe className="w-6 h-6" />
-    },
-    {
-      title: "Insurance-Optimized Systems",
-      desc: "Documentation workflows designed to meet TPA and insurance claim requirements.",
-      benefit: "Accelerates claim approvals and reduces rejection rates due to documentation errors.",
-      icon: <CheckCircle2 className="w-6 h-6" />
-    },
-    {
-      title: "Custom EMR Development",
-      desc: "Bespoke modules for Electronic Medical Records tailored to your specialty.",
-      benefit: "Provides a workflow that matches your clinical practice exactly, not a generic template.",
-      icon: <Activity className="w-6 h-6" />
-    },
-    {
-      title: "Healthcare SaaS Solutions",
-      desc: "Scalable software-as-a-service platforms for healthcare startups.",
-      benefit: "Rapidly deployable solutions that scale as your patient base grows.",
-      icon: <Rocket className="w-6 h-6" />
-    },
-    {
-      title: "Secure Cloud Infrastructure",
-      desc: "Managed hosting and data storage specifically for medical institutions.",
-      benefit: "Eliminates the need for expensive on-site servers while ensuring 99.9% uptime.",
-      icon: <Cloud className="w-6 h-6" />
-    }
-  ];
-
+const Products = () => {
   return (
-    <section id="services" className="py-24 bg-zinc-950">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Our Core Services</h2>
-          <p className="text-zinc-400 text-lg">
-            We provide end-to-end technology solutions designed to solve the specific operational challenges faced by Indian healthcare providers.
+    <section id="products" className="bg-zinc-950 py-24">
+      <div className="mx-auto max-w-7xl px-6">
+        <div className="mx-auto mb-16 max-w-3xl text-center">
+          <h2 className="mb-6 text-3xl font-bold text-white md:text-4xl">
+            Solutions built around real operational bottlenecks
+          </h2>
+          <p className="text-lg text-zinc-400">
+            Each solution is designed to reduce admin burden, improve visibility,
+            and help healthcare teams take action faster.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {services.map((service, idx) => (
+        <div className="grid gap-8 lg:grid-cols-3">
+          {productCards.map((product, idx) => (
             <motion.div
-              key={idx}
+              key={product.name}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: idx * 0.1 }}
-              className="p-8 rounded-3xl bg-zinc-900 border border-zinc-800 hover:border-emerald-500/50 transition-all group"
+              className="rounded-3xl border border-zinc-800 bg-zinc-900 p-8 transition-all hover:border-emerald-500/50"
             >
-              <div className="w-12 h-12 bg-emerald-600/10 rounded-xl flex items-center justify-center text-emerald-500 mb-6 group-hover:bg-emerald-600 group-hover:text-white transition-all">
-                {service.icon}
+              <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-600/10 text-emerald-500">
+                {product.icon}
               </div>
-              <h3 className="text-xl font-bold text-white mb-4">{service.title}</h3>
-              <p className="text-zinc-400 mb-6 text-sm leading-relaxed">{service.desc}</p>
-              <div className="pt-6 border-t border-zinc-800">
-                <span className="text-xs font-bold text-emerald-500 uppercase tracking-wider mb-2 block">Business Benefit</span>
-                <p className="text-zinc-300 text-sm italic">"{service.benefit}"</p>
+              <div className="mb-2 text-xs font-bold uppercase tracking-[0.24em] text-emerald-500">
+                {product.name}
+              </div>
+              <h3 className="mb-4 text-xl font-bold text-white">{product.label}</h3>
+              <p className="mb-6 text-sm leading-relaxed text-zinc-400">
+                {product.description}
+              </p>
+              <div className="border-t border-zinc-800 pt-6">
+                <div className="mb-3 text-xs font-bold uppercase tracking-wider text-zinc-500">
+                  Key Points
+                </div>
+                <ul className="space-y-3">
+                  {product.highlights.map((item) => (
+                    <li key={item} className="flex items-start gap-3 text-sm text-zinc-300">
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-500" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </motion.div>
           ))}
@@ -296,67 +414,83 @@ const Services = () => {
   );
 };
 
-const FeaturedSolution = () => {
+const Platform = () => {
   return (
-    <section id="solutions" className="py-24 bg-zinc-900/30">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="bg-zinc-900 border border-zinc-800 rounded-[2.5rem] overflow-hidden">
-          <div className="grid lg:grid-cols-2 items-center">
+    <section id="platform" className="bg-zinc-900/30 py-24">
+      <div className="mx-auto max-w-7xl px-6">
+        <div className="overflow-hidden rounded-[2.5rem] border border-zinc-800 bg-zinc-900">
+          <div className="grid items-center lg:grid-cols-2">
             <div className="p-8 md:p-16">
-              <span className="inline-block px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-500 text-xs font-bold uppercase tracking-widest mb-6">
-                Featured Solution
+              <span className="mb-6 inline-block rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-bold uppercase tracking-widest text-emerald-500">
+                From Insight to Action
               </span>
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-                AI Clinical Documentation System
+              <h2 className="mb-6 text-3xl font-bold text-white md:text-4xl">
+                Go beyond dashboards and orchestrate daily operations
               </h2>
-              <p className="text-zinc-400 text-lg mb-8 leading-relaxed">
-                Our flagship solution transforms the way doctors document patient visits. Using advanced ambient AI, it captures multilingual conversations and generates structured medical records in real-time.
+              <p className="mb-8 text-lg leading-relaxed text-zinc-400">
+                MedSyra helps teams run core workflows, MediScope highlights what
+                needs attention next, and ClinicIQ catches unusual changes in
+                operational numbers early. Together they help healthcare teams
+                move from fragmented reporting to a more responsive system of action.
               </p>
 
-              <ul className="space-y-4 mb-10">
+              <ul className="mb-10 space-y-4">
                 {[
-                  "Multilingual voice-to-text (Hindi, English, Regional dialects)",
-                  "Automatic generation of structured discharge summaries",
-                  "Insurance-optimized coding and documentation",
-                  "Automated patient follow-up reminders via WhatsApp/SMS"
-                ].map((item, i) => (
-                  <li key={i} className="flex items-start gap-3 text-zinc-300">
-                    <CheckCircle2 className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
+                  "Centralize appointments, billing, records, and follow-ups",
+                  "Give staff prioritized action prompts instead of passive reports",
+                  "Detect unusual drops and spikes before they become larger problems",
+                  "Support clinics, pharmacies, and hospitals with one connected operating layer",
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-3 text-zinc-300">
+                    <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-500" />
                     <span>{item}</span>
                   </li>
                 ))}
               </ul>
 
-              <button className="bg-white text-zinc-950 px-8 py-4 rounded-full font-bold hover:bg-emerald-500 hover:text-white transition-all flex items-center gap-2">
-                <a href="#contact">
-                  Request a Demo
-                </a>
-                <ChevronRight className="w-5 h-5" />
-              </button>
+              <a
+                href="#contact"
+                className="flex w-fit items-center gap-2 rounded-full bg-white px-8 py-4 font-bold text-zinc-950 transition-all hover:bg-emerald-500 hover:text-white"
+              >
+                Request a Demo
+                <ChevronRight className="h-5 w-5" />
+              </a>
             </div>
-            <div className="relative h-full min-h-[400px] bg-zinc-800">
+
+            <div className="relative min-h-[400px] h-full bg-zinc-800">
               <img
                 src={hospitalImage}
-                alt="AI Medical Documentation"
-                className="absolute inset-0 w-full h-full object-cover opacity-50"
+                alt="Healthcare platform overview"
+                className="absolute inset-0 h-full w-full object-cover opacity-50"
                 referrerPolicy="no-referrer"
               />
-              <div className="absolute inset-0 bg-gradient-to-r from-zinc-900 to-transparent lg:block hidden"></div>
+              <div className="absolute inset-0 hidden bg-gradient-to-r from-zinc-900 to-transparent lg:block"></div>
               <div className="absolute inset-0 flex items-center justify-center p-8">
-                <div className="bg-zinc-950/80 backdrop-blur-xl border border-zinc-700 p-6 rounded-2xl w-full max-w-md shadow-2xl">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-3 h-3 rounded-full bg-red-500 animate-pulse"></div>
-                    <span className="text-xs font-mono text-zinc-400 uppercase tracking-widest">Live Processing...</span>
+                <div className="w-full max-w-md rounded-2xl border border-zinc-700 bg-zinc-950/80 p-6 shadow-2xl backdrop-blur-xl">
+                  <div className="mb-4 flex items-center gap-3">
+                    <div className="h-3 w-3 animate-pulse rounded-full bg-emerald-500"></div>
+                    <span className="text-xs font-mono uppercase tracking-widest text-zinc-400">
+                      Healthcare Operations Layer
+                    </span>
                   </div>
-                  <div className="space-y-3">
-                    <div className="h-2 w-3/4 bg-zinc-800 rounded"></div>
-                    <div className="h-2 w-full bg-zinc-800 rounded"></div>
-                    <div className="h-2 w-5/6 bg-zinc-800 rounded"></div>
-                    <div className="h-2 w-2/3 bg-emerald-500/30 rounded"></div>
+                  <div className="space-y-4">
+                    {[
+                      ["MedSyra", "Core workflow management"],
+                      ["MediScope", "Priority-based action guidance"],
+                      ["ClinicIQ", "Operational trend monitoring"],
+                    ].map(([name, desc]) => (
+                      <div
+                        key={name}
+                        className="rounded-xl border border-zinc-800 bg-zinc-900/90 p-4"
+                      >
+                        <div className="text-sm font-semibold text-white">{name}</div>
+                        <div className="mt-1 text-xs text-zinc-500">{desc}</div>
+                      </div>
+                    ))}
                   </div>
-                  <div className="mt-6 pt-6 border-t border-zinc-800 flex justify-between items-center">
-                    <span className="text-xs text-zinc-500 font-mono">Accuracy: 98.4%</span>
-                    <span className="text-xs text-zinc-500 font-mono">Latency: 120ms</span>
+                  <div className="mt-6 flex items-center justify-between border-t border-zinc-800 pt-6">
+                    <span className="text-xs font-mono text-zinc-500">Less admin burden</span>
+                    <span className="text-xs font-mono text-zinc-500">More actionability</span>
                   </div>
                 </div>
               </div>
@@ -369,50 +503,36 @@ const FeaturedSolution = () => {
 };
 
 const WhyChooseUs = () => {
-  const reasons = [
-    {
-      title: "Healthcare Domain Focus",
-      desc: "We don't build generic software. Our team understands medical terminology, clinical workflows, and the nuances of Indian healthcare operations.",
-      icon: <Hospital className="w-6 h-6" />
-    },
-    {
-      title: "Secure Architecture",
-      desc: "Built with a security-first mindset. We implement end-to-end encryption and strict access controls to protect sensitive patient data.",
-      icon: <Lock className="w-6 h-6" />
-    },
-    {
-      title: "Multilingual AI Expertise",
-      desc: "Our AI models are specifically trained on Indian accents and medical contexts, ensuring high accuracy even in noisy clinical environments.",
-      icon: <Zap className="w-6 h-6" />
-    },
-    {
-      title: "Scalable Cloud Systems",
-      desc: "Whether you're a single clinic or a hospital network, our cloud infrastructure scales seamlessly without compromising performance.",
-      icon: <Database className="w-6 h-6" />
-    }
-  ];
-
   return (
-    <section className="py-24 bg-zinc-950">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid lg:grid-cols-3 gap-16">
+    <section className="bg-zinc-950 py-24">
+      <div className="mx-auto max-w-7xl px-6">
+        <div className="grid gap-16 lg:grid-cols-3">
           <div className="lg:col-span-1">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Why Partner With Us?</h2>
-            <p className="text-zinc-400 text-lg mb-8">
-              We take a practical, implementation-driven approach to healthcare technology. We don't just deliver code; we deliver operational efficiency.
+            <h2 className="mb-6 text-3xl font-bold text-white md:text-4xl">
+              Built for healthcare leaders under operational pressure
+            </h2>
+            <p className="mb-8 text-lg text-zinc-400">
+              Healthcare operations break down when teams rely on disconnected
+              tools, delayed reports, and manual tracking. This approach focuses
+              on day-to-day usefulness, not just software features.
             </p>
-            <div className="p-6 rounded-2xl bg-emerald-600/10 border border-emerald-500/20">
-              <p className="text-emerald-400 font-medium italic">
-                "Our goal is to make technology invisible, so doctors can focus entirely on their patients."
+            <div className="rounded-2xl border border-emerald-500/20 bg-emerald-600/10 p-6">
+              <p className="font-medium italic text-emerald-400">
+                "Reduce the busywork, surface the right issues, and help teams
+                stay focused on care delivery."
               </p>
             </div>
           </div>
-          <div className="lg:col-span-2 grid sm:grid-cols-2 gap-8">
-            {reasons.map((reason, i) => (
-              <div key={i} className="p-6 rounded-2xl bg-zinc-900/50 border border-zinc-800">
-                <div className="text-emerald-500 mb-4">{reason.icon}</div>
-                <h3 className="text-lg font-bold text-white mb-3">{reason.title}</h3>
-                <p className="text-zinc-400 text-sm leading-relaxed">{reason.desc}</p>
+
+          <div className="grid gap-8 sm:grid-cols-2 lg:col-span-2">
+            {platformPillars.map((pillar) => (
+              <div
+                key={pillar.title}
+                className="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-6"
+              >
+                <div className="mb-4 text-emerald-500">{pillar.icon}</div>
+                <h3 className="mb-3 text-lg font-bold text-white">{pillar.title}</h3>
+                <p className="text-sm leading-relaxed text-zinc-400">{pillar.desc}</p>
               </div>
             ))}
           </div>
@@ -422,29 +542,26 @@ const WhyChooseUs = () => {
   );
 };
 
-const Industries = () => {
-  const industries = [
-    { name: "Small Clinics", icon: <Building2 />, desc: "Streamlining solo and group practices." },
-    { name: "Diagnostic Centers", icon: <Microscope />, desc: "Automating reporting and data management." },
-    { name: "Hospitals", icon: <Hospital />, desc: "Full-scale digital transformation solutions." },
-    { name: "Healthcare Startups", icon: <Rocket />, desc: "Building the next generation of health-tech." }
-  ];
-
+const UseCases = () => {
   return (
-    <section className="py-24 bg-zinc-900/20 border-y border-zinc-900">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl font-bold text-white mb-4">Industries We Serve</h2>
-          <p className="text-zinc-400">Tailored solutions for every scale of healthcare delivery.</p>
+    <section className="border-y border-zinc-900 bg-zinc-900/20 py-24">
+      <div className="mx-auto max-w-7xl px-6">
+        <div className="mb-16 text-center">
+          <h2 className="mb-4 text-3xl font-bold text-white">Who this stack is for</h2>
+          <p className="text-zinc-400">
+            Built for healthcare organizations that need fewer delays, less manual chasing, and more operational control.
+          </p>
         </div>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-          {industries.map((ind, i) => (
-            <div key={i} className="p-8 rounded-3xl bg-zinc-900 border border-zinc-800 text-center hover:bg-zinc-800 transition-colors">
-              <div className="w-12 h-12 bg-emerald-600/10 rounded-full flex items-center justify-center text-emerald-500 mx-auto mb-4">
-                {ind.icon}
+        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+          {useCases.map((item) => (
+            <div
+              key={item}
+              className="rounded-3xl border border-zinc-800 bg-zinc-900 p-8 text-center transition-colors hover:bg-zinc-800"
+            >
+              <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-emerald-600/10 text-emerald-500">
+                <Users className="h-6 w-6" />
               </div>
-              <h3 className="text-white font-bold mb-2">{ind.name}</h3>
-              <p className="text-zinc-500 text-xs">{ind.desc}</p>
+              <p className="text-sm leading-relaxed text-zinc-300">{item}</p>
             </div>
           ))}
         </div>
@@ -455,98 +572,76 @@ const Industries = () => {
 
 const Security = () => {
   return (
-    <section id="security" className="py-24 bg-zinc-950">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+    <section className="bg-zinc-950 py-24">
+      <div className="mx-auto max-w-7xl px-6">
+        <div className="grid items-center gap-16 lg:grid-cols-2">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-8">Security & Compliance</h2>
+            <h2 className="mb-8 text-3xl font-bold text-white md:text-4xl">
+              Secure, reliable, and designed for healthcare environments
+            </h2>
             <div className="space-y-8">
               <div className="flex gap-4">
-                <div className="shrink-0 w-10 h-10 rounded-lg bg-emerald-600/10 flex items-center justify-center text-emerald-500">
-                  <Lock className="w-5 h-5" />
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-emerald-600/10 text-emerald-500">
+                  <Lock className="h-5 w-5" />
                 </div>
                 <div>
-                  <h3 className="text-white font-bold mb-2">Advanced Data Encryption</h3>
-                  <p className="text-zinc-400 text-sm">All data is encrypted at rest and in transit using industry-standard AES-256 and TLS 1.3 protocols.</p>
+                  <h3 className="mb-2 font-bold text-white">Protected data access</h3>
+                  <p className="text-sm text-zinc-400">
+                    Healthcare teams still need role-aware access and disciplined handling of operational and patient information.
+                  </p>
                 </div>
               </div>
               <div className="flex gap-4">
-                <div className="shrink-0 w-10 h-10 rounded-lg bg-emerald-600/10 flex items-center justify-center text-emerald-500">
-                  <Cloud className="w-5 h-5" />
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-emerald-600/10 text-emerald-500">
+                  <ShieldCheck className="h-5 w-5" />
                 </div>
                 <div>
-                  <h3 className="text-white font-bold mb-2">Secure Cloud Hosting</h3>
-                  <p className="text-zinc-400 text-sm">We utilize Tier-4 data centers with multi-region redundancy to ensure your data is always available and protected.</p>
+                  <h3 className="mb-2 font-bold text-white">Privacy-conscious workflows</h3>
+                  <p className="text-sm text-zinc-400">
+                    Operational automation only works when privacy, auditability, and staff trust are built into the workflow.
+                  </p>
                 </div>
               </div>
               <div className="flex gap-4">
-                <div className="shrink-0 w-10 h-10 rounded-lg bg-emerald-600/10 flex items-center justify-center text-emerald-500">
-                  <Users className="w-5 h-5" />
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-emerald-600/10 text-emerald-500">
+                  <Globe className="h-5 w-5" />
                 </div>
                 <div>
-                  <h3 className="text-white font-bold mb-2">Controlled Data Access</h3>
-                  <p className="text-zinc-400 text-sm">Granular role-based access controls (RBAC) ensure that only authorized personnel can view sensitive medical information.</p>
+                  <h3 className="mb-2 font-bold text-white">Deployment-ready foundation</h3>
+                  <p className="text-sm text-zinc-400">
+                    The platform is structured for practical rollout in clinics, pharmacies, and larger healthcare operations.
+                  </p>
                 </div>
               </div>
             </div>
           </motion.div>
-          <div className="p-12 rounded-[2.5rem] bg-zinc-900 border border-zinc-800 relative overflow-hidden">
-            <div className="absolute top-0 right-0 p-8 opacity-10">
-              <ShieldCheck className="w-64 h-64 text-emerald-500" />
+
+          <div className="relative overflow-hidden rounded-[2.5rem] border border-zinc-800 bg-zinc-900 p-12">
+            <div className="absolute right-0 top-0 p-8 opacity-10">
+              <ShieldCheck className="h-64 w-64 text-emerald-500" />
             </div>
             <div className="relative z-10">
-              <h3 className="text-2xl font-bold text-white mb-6">Privacy-First Approach</h3>
-              <p className="text-zinc-400 mb-8 leading-relaxed">
-                We believe that medical privacy is a fundamental right. Our systems are designed to minimize data exposure and provide full audit trails for every interaction with patient records.
+              <h3 className="mb-6 text-2xl font-bold text-white">Operational Trust Layer</h3>
+              <p className="mb-8 leading-relaxed text-zinc-400">
+                Clinics, pharmacies, and hospitals need software they can trust
+                with everyday operations. The platform is built to support
+                controlled access, cleaner workflows, and reliable visibility.
               </p>
               <div className="flex flex-wrap gap-4">
-                <span className="px-4 py-2 rounded-lg bg-zinc-950 border border-zinc-800 text-zinc-400 text-xs font-mono">HIPAA Compliant Ready</span>
-                <span className="px-4 py-2 rounded-lg bg-zinc-950 border border-zinc-800 text-zinc-400 text-xs font-mono">GDPR Aligned</span>
-                <span className="px-4 py-2 rounded-lg bg-zinc-950 border border-zinc-800 text-zinc-400 text-xs font-mono">ISO 27001 Standards</span>
+                <span className="rounded-lg border border-zinc-800 bg-zinc-950 px-4 py-2 text-xs font-mono text-zinc-400">
+                  MedSyra: workflow control
+                </span>
+                <span className="rounded-lg border border-zinc-800 bg-zinc-950 px-4 py-2 text-xs font-mono text-zinc-400">
+                  MediScope: action guidance
+                </span>
+                <span className="rounded-lg border border-zinc-800 bg-zinc-950 px-4 py-2 text-xs font-mono text-zinc-400">
+                  ClinicIQ: monitoring
+                </span>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-};
-
-const CaseStudy = () => {
-  return (
-    <section className="py-24 bg-zinc-950 border-t border-zinc-900">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl font-bold text-white mb-4">Our Products</h2>
-          <p className="text-zinc-400">Real-world impact of our technology solutions.</p>
-        </div>
-        <div className="max-w-4xl mx-auto p-8 md:p-12 rounded-3xl bg-zinc-900 border border-zinc-800">
-          <div className="flex flex-col md:flex-row gap-12">
-            <div className="md:w-1/3">
-              <div className="text-emerald-500 font-bold text-4xl mb-2">40%</div>
-              <div className="text-zinc-400 text-sm uppercase tracking-widest font-bold mb-8">Time Saved</div>
-              <div className="space-y-4">
-                <div className="text-white font-bold">Client:</div>
-                <div className="text-zinc-400 text-sm">Multi-specialty Clinic, Bangalore</div>
-                <div className="text-white font-bold">Solution:</div>
-                <div className="text-zinc-400 text-sm">AI Clinical Documentation & EMR Integration</div>
-              </div>
-            </div>
-            <div className="md:w-2/3">
-              <h3 className="text-2xl font-bold text-white mb-6">Automating Discharge Summaries</h3>
-              <p className="text-zinc-400 mb-6 leading-relaxed">
-                The client was struggling with a 2-hour delay in patient discharges due to manual summary preparation. We implemented our AI Documentation solution that captures doctor-patient rounds and automatically generates a draft discharge summary.
-              </p>
-              <p className="text-zinc-400 mb-8 leading-relaxed">
-                The result was a 40% reduction in documentation time and significantly higher patient satisfaction scores due to faster discharge processes.
-              </p>
-              <button className="text-emerald-500 font-bold flex items-center gap-2 hover:gap-3 transition-all">
-                Read Full Case Study <ArrowRight className="w-4 h-4" />
-              </button>
             </div>
           </div>
         </div>
@@ -556,25 +651,32 @@ const CaseStudy = () => {
 };
 
 const ContactForm = () => {
-  const [formState, setFormState] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [formState, setFormState] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [formError, setFormError] = useState("");
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    organization: '',
-    message: ''
+    name: "",
+    email: "",
+    phone: "",
+    organization: "",
+    message: "",
   });
 
-
   const handleSubmit = async (e: React.FormEvent) => {
-    
     e.preventDefault();
+    setFormError("");
+
+    if (!serviceId || !templateId || !publicKey) {
+      setFormState("error");
+      setFormError("Contact form is not configured yet. Add the EmailJS Vite environment variables to enable submission.");
+      return;
+    }
+
     setFormState("submitting");
 
     try {
       await emailjs.send(
         serviceId,
-       templateId,
+        templateId,
         {
           name: formData.name,
           email: formData.email,
@@ -582,7 +684,7 @@ const ContactForm = () => {
           organization: formData.organization,
           message: formData.message,
         },
-        publicKey
+        publicKey,
       );
 
       setFormState("success");
@@ -590,147 +692,174 @@ const ContactForm = () => {
     } catch (error) {
       console.error("EmailJS Error:", error);
       setFormState("error");
+      setFormError("Message could not be sent. Check your EmailJS service, template, public key, and allowed origin settings.");
     }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    const nextValue = name === "phone" ? value.replace(/\D/g, "") : value;
+
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [name]: nextValue,
     });
   };
 
   return (
-    <section id="contact" className="py-24 bg-zinc-950 border-t border-zinc-900">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid lg:grid-cols-2 gap-16">
+    <section id="contact" className="border-t border-zinc-900 bg-zinc-950 py-24">
+      <div className="mx-auto max-w-7xl px-6">
+        <div className="grid gap-16 lg:grid-cols-2">
           <div>
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Get In Touch</h2>
-            <p className="text-zinc-400 text-lg mb-8 leading-relaxed">
-              Have a specific project in mind or want to learn more about our AI solutions? Fill out the form, and our healthcare technology experts will get back to you within 24 hours.
+            <h2 className="mb-6 text-3xl font-bold text-white md:text-4xl">
+              Explore what MediLabsAI can automate for your team
+            </h2>
+            <p className="mb-8 text-lg leading-relaxed text-zinc-400">
+              Use the form if you want to improve appointment handling, billing,
+              follow-ups, stock visibility, or operational monitoring for your
+              clinic, pharmacy, hospital, or healthcare business.
             </p>
 
             <div className="space-y-6">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-emerald-600/10 flex items-center justify-center text-emerald-500">
-                  <Building2 className="w-6 h-6" />
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-emerald-600/10 text-emerald-500">
+                  <Building2 className="h-6 w-6" />
                 </div>
                 <div>
-                  <div className="text-white font-bold">Office</div>
-                  <div className="text-zinc-500 text-sm">Bhubaneswar, Odisha, India</div>
+                  <div className="font-bold text-white">Office</div>
+                  <div className="text-sm text-zinc-500">Bhubaneswar, Odisha, India</div>
                 </div>
               </div>
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-emerald-600/10 flex items-center justify-center text-emerald-500">
-                  <Users className="w-6 h-6" />
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-emerald-600/10 text-emerald-500">
+                  <Users className="h-6 w-6" />
                 </div>
                 <div>
-                  <div className="text-white font-bold">Consultation</div>
-                  <div className="text-zinc-500 text-sm">Available for on-site visits across India</div>
+                  <div className="font-bold text-white">Consultation</div>
+                  <div className="text-sm text-zinc-500">Available for demos, onboarding discussions, and workflow reviews</div>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="bg-zinc-900 border border-zinc-800 p-8 md:p-10 rounded-[2rem]">
-            {formState === 'success' ? (
+          <div className="rounded-[2rem] border border-zinc-800 bg-zinc-900 p-8 md:p-10">
+            {formState === "success" ? (
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="h-full flex flex-col items-center justify-center text-center py-12"
+                className="flex h-full flex-col items-center justify-center py-12 text-center"
               >
-                <div className="w-20 h-20 bg-emerald-600 rounded-full flex items-center justify-center text-white mb-6">
-                  <CheckCircle2 className="w-10 h-10" />
+                <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-emerald-600 text-white">
+                  <CheckCircle2 className="h-10 w-10" />
                 </div>
-                <h3 className="text-2xl font-bold text-white mb-2">Message Sent!</h3>
-                <p className="text-zinc-400">Thank you for reaching out. We'll be in touch shortly.</p>
+                <h3 className="mb-2 text-2xl font-bold text-white">Message Sent</h3>
+                <p className="text-zinc-400">
+                  Thank you for reaching out. We&apos;ll get back to you shortly.
+                </p>
                 <button
-                  onClick={() => setFormState('idle')}
-                  className="mt-8 text-emerald-500 font-bold hover:underline"
+                  onClick={() => setFormState("idle")}
+                  className="mt-8 font-bold text-emerald-500 hover:underline"
                 >
                   Send another message
                 </button>
               </motion.div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
-                {formState === 'error' && (
-                  <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-sm">
-                    Something went wrong. Please try again later or email us directly.
+                {formState === "error" && (
+                  <div className="rounded-xl border border-red-500/20 bg-red-500/10 p-4 text-sm text-red-400">
+                    {formError || "Something went wrong. Please try again later or email us directly."}
                   </div>
                 )}
-                <div className="grid md:grid-cols-2 gap-6">
+                <div className="grid gap-6 md:grid-cols-2">
                   <div className="space-y-2">
-                    <label className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Full Name</label>
+                    <label className="text-xs font-bold uppercase tracking-wider text-zinc-500">
+                      Full Name
+                    </label>
                     <input
                       required
                       name="name"
                       type="text"
                       value={formData.name}
                       onChange={handleChange}
+                      autoComplete="name"
                       placeholder="Your Name"
-                      className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition-all"
+                      className="w-full rounded-xl border border-zinc-800 bg-zinc-950 px-4 py-3 text-white outline-none transition-all focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Email Address</label>
+                    <label className="text-xs font-bold uppercase tracking-wider text-zinc-500">
+                      Email Address
+                    </label>
                     <input
                       required
                       name="email"
                       type="email"
                       value={formData.email}
                       onChange={handleChange}
-                      placeholder="Email-Id"
-                      className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition-all"
+                      autoComplete="email"
+                      placeholder="Email Address"
+                      className="w-full rounded-xl border border-zinc-800 bg-zinc-950 px-4 py-3 text-white outline-none transition-all focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
                     />
                   </div>
                 </div>
-                <div className="grid md:grid-cols-2 gap-6">
+                <div className="grid gap-6 md:grid-cols-2">
                   <div className="space-y-2">
-                    <label className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Phone Number</label>
+                    <label className="text-xs font-bold uppercase tracking-wider text-zinc-500">
+                      Phone Number
+                    </label>
                     <input
                       name="phone"
                       type="tel"
                       value={formData.phone}
                       onChange={handleChange}
+                      inputMode="numeric"
+                      pattern="[0-9]*"
+                      autoComplete="tel"
+                      maxLength={15}
                       placeholder="Your Contact Number"
-                      className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition-all"
+                      className="w-full rounded-xl border border-zinc-800 bg-zinc-950 px-4 py-3 text-white outline-none transition-all focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Organization</label>
+                    <label className="text-xs font-bold uppercase tracking-wider text-zinc-500">
+                      Organization
+                    </label>
                     <input
                       name="organization"
                       type="text"
                       value={formData.organization}
                       onChange={handleChange}
+                      autoComplete="organization"
                       placeholder="Organization Name"
-                      className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition-all"
+                      className="w-full rounded-xl border border-zinc-800 bg-zinc-950 px-4 py-3 text-white outline-none transition-all focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
                     />
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <label className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Message</label>
+                  <label className="text-xs font-bold uppercase tracking-wider text-zinc-500">
+                    Message
+                  </label>
                   <textarea
                     required
                     name="message"
                     rows={4}
                     value={formData.message}
                     onChange={handleChange}
-                    placeholder="Tell us about your requirements..."
-                    className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition-all resize-none"
+                    placeholder="Tell us where your team is losing time or facing operational bottlenecks..."
+                    className="w-full resize-none rounded-xl border border-zinc-800 bg-zinc-950 px-4 py-3 text-white outline-none transition-all focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
                   ></textarea>
                 </div>
                 <button
-                  disabled={formState === 'submitting'}
+                  disabled={formState === "submitting"}
                   type="submit"
-                  className="w-full bg-emerald-600 hover:bg-emerald-500 cursor-pointer disabled:bg-zinc-800 text-white font-bold py-4 rounded-xl transition-all flex items-center justify-center gap-2"
+                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-600 py-4 font-bold text-white transition-all hover:bg-emerald-500 disabled:cursor-not-allowed disabled:bg-zinc-800"
                 >
-                  {formState === 'submitting' ? (
-                    <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                  {formState === "submitting" ? (
+                    <div className="h-6 w-6 animate-spin rounded-full border-2 border-white/30 border-t-white"></div>
                   ) : (
                     <>
                       Send Message
-                      <ChevronRight className="w-5 h-5" />
+                      <ChevronRight className="h-5 w-5" />
                     </>
                   )}
                 </button>
@@ -745,20 +874,24 @@ const ContactForm = () => {
 
 const CTA = () => {
   return (
-    <section className="py-24 bg-emerald-600 relative overflow-hidden">
-      <div className="absolute top-0 right-0 w-1/2 h-full opacity-10">
-        <Activity className="w-full h-full text-white" />
+    <section className="relative overflow-hidden bg-emerald-600 py-24">
+      <div className="absolute right-0 top-0 h-full w-1/2 opacity-10">
+        <Activity className="h-full w-full text-white" />
       </div>
-      <div className="max-w-7xl mx-auto px-6 relative z-10 text-center">
-        <h2 className="text-4xl md:text-5xl font-bold text-white mb-8">Ready to Modernize Your Practice?</h2>
-        <p className="text-emerald-100 text-xl mb-12 max-w-2xl mx-auto">
-          Join the growing number of healthcare providers using MediLabs AI to improve efficiency and patient outcomes.
+      <div className="relative z-10 mx-auto max-w-7xl px-6 text-center">
+        <h2 className="mb-8 text-4xl font-bold text-white md:text-5xl">
+          Put AI to work across healthcare operations
+        </h2>
+        <p className="mx-auto mb-12 max-w-2xl text-xl text-emerald-100">
+          Reduce admin burden, improve visibility, and give your teams a more
+          actionable operating system across clinics, pharmacies, and hospitals.
         </p>
-        <button className="bg-white text-emerald-600 px-10 py-5 rounded-full text-xl font-bold hover:bg-zinc-950 hover:text-white transition-all shadow-2xl">
-          <a href="#contact">
-            Schedule a Consultation
-          </a>
-        </button>
+        <a
+          href="#contact"
+          className="rounded-full bg-white px-10 py-5 text-xl font-bold text-emerald-600 shadow-2xl transition-all hover:bg-zinc-950 hover:text-white"
+        >
+          Schedule a Consultation
+        </a>
       </div>
     </section>
   );
@@ -766,40 +899,58 @@ const CTA = () => {
 
 const Footer = () => {
   return (
-    <footer className="bg-zinc-950 pt-20 pb-10 border-t border-zinc-900">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid md:grid-cols-4 gap-12 mb-16">
+    <footer className="border-t border-zinc-900 bg-zinc-950 pb-10 pt-20">
+      <div className="mx-auto max-w-7xl px-6">
+        <div className="mb-16 grid gap-12 md:grid-cols-4">
           <div className="col-span-2">
-            <div className="flex items-center gap-2 mb-6">
-              <div className="w-8 h-8 bg-emerald-600 rounded flex items-center justify-center">
-                <Stethoscope className="text-white w-5 h-5" />
+            <div className="mb-6 flex items-center gap-2">
+              <div className="flex h-8 w-8 items-center justify-center rounded bg-emerald-600">
+                <Stethoscope className="h-5 w-5 text-white" />
               </div>
-              <span className="text-xl font-bold tracking-tight text-white">MediLabs<span className="text-emerald-500">AI</span></span>
+              <span className="text-xl font-bold tracking-tight text-white">
+                MediLabs<span className="text-emerald-500">AI</span>
+              </span>
             </div>
-            <p className="text-zinc-500 max-w-sm mb-8">
-              Empowering healthcare providers with intelligent, secure, and practical technology solutions.
+            <p className="mb-8 max-w-sm text-zinc-500">
+              Healthcare software for clinics, pharmacies, hospitals, and care
+              teams that need smoother daily operations.
             </p>
             <div className="flex gap-4">
-              {/* Social placeholders */}
-              <div className="w-10 h-10 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400 hover:text-emerald-500 cursor-pointer transition-colors">
-                <Globe className="w-5 h-5" />
+              <div className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-zinc-800 bg-zinc-900 text-zinc-400 transition-colors hover:text-emerald-500">
+                <Globe className="h-5 w-5" />
               </div>
-              <div className="w-10 h-10 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400 hover:text-emerald-500 cursor-pointer transition-colors">
-                <Users className="w-5 h-5" />
+              <div className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-zinc-800 bg-zinc-900 text-zinc-400 transition-colors hover:text-emerald-500">
+                <Users className="h-5 w-5" />
               </div>
             </div>
           </div>
           <div>
-            <h4 className="text-white font-bold mb-6">Quick Links</h4>
+            <h4 className="mb-6 font-bold text-white">Quick Links</h4>
             <ul className="space-y-4">
-              <li><a href="#about" className="text-zinc-500 hover:text-emerald-500 transition-colors">About Us</a></li>
-              <li><a href="#services" className="text-zinc-500 hover:text-emerald-500 transition-colors">Services</a></li>
-              <li><a href="#solutions" className="text-zinc-500 hover:text-emerald-500 transition-colors">Solutions</a></li>
-              <li><a href="#contact" className="text-zinc-500 hover:text-emerald-500 transition-colors">Contact</a></li>
+              <li>
+                <a href="#about" className="text-zinc-500 transition-colors hover:text-emerald-500">
+                  About
+                </a>
+              </li>
+              <li>
+                <a href="#products" className="text-zinc-500 transition-colors hover:text-emerald-500">
+                  Products
+                </a>
+              </li>
+              <li>
+                <a href="#platform" className="text-zinc-500 transition-colors hover:text-emerald-500">
+                  Platform
+                </a>
+              </li>
+              <li>
+                <a href="#contact" className="text-zinc-500 transition-colors hover:text-emerald-500">
+                  Contact
+                </a>
+              </li>
             </ul>
           </div>
           <div>
-            <h4 className="text-white font-bold mb-6">Contact</h4>
+            <h4 className="mb-6 font-bold text-white">Contact</h4>
             <ul className="space-y-4">
               <li className="text-zinc-500">Bhubaneswar, India</li>
               <li className="text-zinc-500">medilabsai.health@gmail.com</li>
@@ -807,11 +958,15 @@ const Footer = () => {
             </ul>
           </div>
         </div>
-        <div className="pt-8 border-t border-zinc-900 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-zinc-600 text-sm">© 2025 MediLabsAI. All rights reserved.</p>
+        <div className="flex flex-col items-center justify-between gap-4 border-t border-zinc-900 pt-8 md:flex-row">
+          <p className="text-sm text-zinc-600">© 2026 MediLabsAI. All rights reserved.</p>
           <div className="flex gap-8">
-            <a href="#" className="text-zinc-600 text-xs hover:text-zinc-400">Privacy Policy</a>
-            <a href="#" className="text-zinc-600 text-xs hover:text-zinc-400">Terms of Service</a>
+            <a href="#" className="text-xs text-zinc-600 hover:text-zinc-400">
+              Privacy Policy
+            </a>
+            <a href="#" className="text-xs text-zinc-600 hover:text-zinc-400">
+              Terms of Service
+            </a>
           </div>
         </div>
       </div>
@@ -826,12 +981,11 @@ export default function App() {
       <main>
         <Hero />
         <About />
-        <Services />
-        <FeaturedSolution />
+        <Products />
+        <Platform />
         <WhyChooseUs />
-        <Industries />
+        <UseCases />
         <Security />
-        <CaseStudy />
         <ContactForm />
         <CTA />
       </main>

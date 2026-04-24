@@ -9,4 +9,58 @@
   html {
     scroll-behavior: smooth;
   }
+
+  :root {
+    color-scheme: dark;
+  }
+
+  input,
+  textarea,
+  select {
+    color-scheme: dark;
+    background-color: rgb(9 9 11);
+    color: white;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: rgb(113 113 122);
+  }
+
+  input:-internal-autofill-selected {
+    background-color: rgb(9 9 11);
+    color: white;
+  }
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active,
+  textarea:-webkit-autofill,
+  textarea:-webkit-autofill:hover,
+  textarea:-webkit-autofill:focus,
+  textarea:-webkit-autofill:active,
+  select:-webkit-autofill,
+  select:-webkit-autofill:hover,
+  select:-webkit-autofill:focus,
+  select:-webkit-autofill:active {
+    -webkit-text-fill-color: white;
+    -webkit-box-shadow: 0 0 0 1000px rgb(9 9 11) inset;
+    box-shadow: 0 0 0 1000px rgb(9 9 11) inset;
+    background-color: rgb(9 9 11);
+    caret-color: white;
+    transition: background-color 9999s ease-in-out 0s;
+  }
+
+  input:-moz-autofill,
+  input:-moz-autofill:focus,
+  textarea:-moz-autofill,
+  textarea:-moz-autofill:focus,
+  select:-moz-autofill,
+  select:-moz-autofill:focus {
+    box-shadow: 0 0 0 1000px rgb(9 9 11) inset;
+    -moz-text-fill-color: white;
+    color: white;
+    caret-color: white;
+  }
 }
