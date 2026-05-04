@@ -137,9 +137,9 @@ const Navbar = () => {
           <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-600">
             <Stethoscope className="h-6 w-6 text-white" />
           </div>
-          <span className="text-xl font-bold tracking-tight text-white">
-            MediLabs<span className="text-emerald-500">AI</span>
-          </span>
+            <span className="text-xl font-bold tracking-tight text-white">
+              Med<span className="text-emerald-500">Syra</span>
+            </span>
         </div>
 
         <div className="hidden items-center gap-8 md:flex">
@@ -224,7 +224,7 @@ const Hero = () => {
               </span>
             </h1>
             <p className="mb-10 max-w-3xl text-xl leading-relaxed text-zinc-400">
-              MediLabsAI helps healthcare organizations automate repetitive
+              MedSyra helps healthcare organizations automate repetitive
               operational work, surface issues earlier, and keep frontline teams
               focused on patients instead of manual coordination.
             </p>
@@ -300,7 +300,7 @@ const About = () => {
               Healthcare organizations lose time and money when appointments,
               billing, stock movement, follow-ups, and daily performance are
               managed across paper registers, spreadsheets, and disconnected
-              tools. MediLabsAI brings those workflows into focused products
+              tools. MedSyra brings those workflows into focused products
               designed to automate coordination and improve operational clarity.
             </p>
             <p className="mb-8 text-lg leading-relaxed text-zinc-400">
@@ -712,7 +712,7 @@ const ContactForm = () => {
         <div className="grid gap-16 lg:grid-cols-2">
           <div>
             <h2 className="mb-6 text-3xl font-bold text-white md:text-4xl">
-              Explore what MediLabsAI can automate for your team
+              Explore what MedSyra can automate for your team
             </h2>
             <p className="mb-8 text-lg leading-relaxed text-zinc-400">
               Use the form if you want to improve appointment handling, billing,
@@ -907,9 +907,9 @@ const Footer = () => {
               <div className="flex h-8 w-8 items-center justify-center rounded bg-emerald-600">
                 <Stethoscope className="h-5 w-5 text-white" />
               </div>
-              <span className="text-xl font-bold tracking-tight text-white">
-                MediLabs<span className="text-emerald-500">AI</span>
-              </span>
+                <span className="text-xl font-bold tracking-tight text-white">
+                  Med<span className="text-emerald-500">Syra</span>
+                </span>
             </div>
             <p className="mb-8 max-w-sm text-zinc-500">
               Healthcare software for clinics, pharmacies, hospitals, and care
@@ -953,13 +953,13 @@ const Footer = () => {
             <h4 className="mb-6 font-bold text-white">Contact</h4>
             <ul className="space-y-4">
               <li className="text-zinc-500">Bhubaneswar, India</li>
-              <li className="text-zinc-500">medilabsai.health@gmail.com</li>
+              <li className="text-zinc-500">medsyra.health@gmail.com</li>
               <li className="text-zinc-500">+91 (79) 7841-2095</li>
             </ul>
           </div>
         </div>
         <div className="flex flex-col items-center justify-between gap-4 border-t border-zinc-900 pt-8 md:flex-row">
-          <p className="text-sm text-zinc-600">© 2026 MediLabsAI. All rights reserved.</p>
+          <p className="text-sm text-zinc-600">© 2026 MedSyra. All rights reserved.</p>
           <div className="flex gap-8">
             <a href="#" className="text-xs text-zinc-600 hover:text-zinc-400">
               Privacy Policy
