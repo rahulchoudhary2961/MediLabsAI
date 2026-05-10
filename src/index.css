@@ -1,8 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700;800&display=swap");
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Sora", ui-sans-serif, system-ui, sans-serif;
 }
 
 @layer base {
@@ -12,23 +13,30 @@
 
   :root {
     color-scheme: dark;
+    background: #030806;
+  }
+
+  body {
+    background: #030806;
+    color: #ffffff;
+    margin: 0;
   }
 
   input,
   textarea,
   select {
     color-scheme: dark;
-    background-color: rgb(9 9 11);
+    background-color: rgba(0, 0, 0, 0.2);
     color: white;
   }
 
   input::placeholder,
   textarea::placeholder {
-    color: rgb(113 113 122);
+    color: #71717a;
   }
 
   input:-internal-autofill-selected {
-    background-color: rgb(9 9 11);
+    background-color: rgba(0, 0, 0, 0.2);
     color: white;
   }
 
@@ -45,9 +53,9 @@
   select:-webkit-autofill:focus,
   select:-webkit-autofill:active {
     -webkit-text-fill-color: white;
-    -webkit-box-shadow: 0 0 0 1000px rgb(9 9 11) inset;
-    box-shadow: 0 0 0 1000px rgb(9 9 11) inset;
-    background-color: rgb(9 9 11);
+    -webkit-box-shadow: 0 0 0 1000px #07100d inset;
+    box-shadow: 0 0 0 1000px #07100d inset;
+    background-color: #07100d;
     caret-color: white;
     transition: background-color 9999s ease-in-out 0s;
   }
@@ -58,9 +66,22 @@
   textarea:-moz-autofill:focus,
   select:-moz-autofill,
   select:-moz-autofill:focus {
-    box-shadow: 0 0 0 1000px rgb(9 9 11) inset;
+    box-shadow: 0 0 0 1000px #07100d inset;
     -moz-text-fill-color: white;
     color: white;
     caret-color: white;
   }
+}
+
+@layer utilities {
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
 }
