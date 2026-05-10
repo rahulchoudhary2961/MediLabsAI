@@ -1,6 +1,6 @@
 ﻿import React, { useEffect, useState } from "react";
 import emailjs from "@emailjs/browser";
-import { Link, NavLink, Outlet, Route, Routes, useLocation } from "react-router-dom";
+import { Link, Outlet, Route, Routes, useLocation } from "react-router-dom";
 import {
   ArrowRight,
   Building2,
@@ -129,9 +129,41 @@ const fadeUp = {
   transition: { duration: 0.6, ease: "easeOut" as const },
 };
 
+type SectionHeadingProps = {
+  label: string;
+  title: string;
+  body: string;
+  theme?: "light" | "dark";
+};
+
+function SectionHeading({ label, title, body, theme = "light" }: SectionHeadingProps) {
+  const isDark = theme === "dark";
+
+  return (
+    <motion.div {...fadeUp} className="max-w-4xl">
+      <div className={`inline-flex items-center rounded-full border px-4 py-2 text-[11px] font-bold uppercase tracking-[0.28em] ${
+        isDark
+          ? "border-emerald-300/20 bg-emerald-400/10 text-emerald-300"
+          : "border-emerald-200 bg-emerald-50 text-emerald-700"
+      }`}>
+        {label}
+      </div>
+      <h2 className={`mt-5 font-[family-name:var(--font-display)] text-4xl leading-tight md:text-6xl ${isDark ? "text-white" : "text-[#08110e]"}`}>
+        {title}
+      </h2>
+      <p className={`mt-5 text-lg leading-8 ${isDark ? "text-zinc-300" : "text-[#2e2944]"}`}>
+        {body}
+      </p>
+    </motion.div>
+  );
+}
+
 function Navbar() {
+  const location = useLocation();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
+  const isHomePage = location.pathname === routes.home;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 18);
@@ -139,12 +171,54 @@ function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    if (!isHomePage) {
+      setActiveSection(location.pathname);
+      return;
+    }
+
+    const sections = ["home", "solutions", "care-areas", "contact"];
+    const observers = sections.map((id) => {
+      const element = document.getElementById(id);
+      if (!element) {
+        return null;
+      }
+
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setActiveSection(id);
+          }
+        },
+        {
+          rootMargin: "-35% 0px -45% 0px",
+          threshold: 0.15,
+        },
+      );
+
+      observer.observe(element);
+      return observer;
+    });
+
+    return () => {
+      observers.forEach((observer) => observer?.disconnect());
+    };
+  }, [isHomePage, location.pathname]);
+
   const links = [
-    { label: "Home", href: routes.home },
-    { label: "Solutions", href: routes.solutions },
-    { label: "Care Areas", href: routes.careAreas },
-    { label: "Contact", href: routes.contact },
+    { label: "Home", href: routes.home, sectionId: "home" },
+    { label: "Solutions", href: routes.solutions, sectionId: "solutions" },
+    { label: "Care Areas", href: routes.careAreas, sectionId: "care-areas" },
+    { label: "Contact", href: routes.contact, sectionId: "contact" },
   ];
+
+  const isLinkActive = (href: string, sectionId: string) => {
+    if (isHomePage) {
+      return activeSection === sectionId;
+    }
+
+    return location.pathname === href;
+  };
 
   return (
     <nav className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${scrolled ? "bg-[#030806]/92 backdrop-blur-md" : "bg-transparent"}`}>
@@ -161,9 +235,13 @@ function Navbar() {
 
         <div className="hidden items-center gap-8 md:flex">
           {links.map((link) => (
-            <NavLink key={link.label} to={link.href} className={({ isActive }) => `text-sm font-medium transition-colors hover:text-emerald-300 ${isActive ? "text-emerald-300" : "text-zinc-300"}`}>
+            <Link
+              key={link.label}
+              to={link.href}
+              className={`text-sm font-medium transition-colors hover:text-emerald-300 ${isLinkActive(link.href, link.sectionId) ? "text-emerald-300" : "text-zinc-300"}`}
+            >
               {link.label}
-            </NavLink>
+            </Link>
           ))}
           <Link to={routes.contact} className="rounded-full bg-emerald-500 px-5 py-3 text-sm font-semibold text-[#02110b] transition-colors hover:bg-emerald-400">
             Request demo
@@ -185,9 +263,14 @@ function Navbar() {
           >
             <div className="flex flex-col gap-5 px-5 py-6">
               {links.map((link) => (
-                <NavLink key={link.label} to={link.href} onClick={() => setOpen(false)} className="text-base font-medium text-zinc-200">
+                <Link
+                  key={link.label}
+                  to={link.href}
+                  onClick={() => setOpen(false)}
+                  className={`text-base font-medium ${isLinkActive(link.href, link.sectionId) ? "text-emerald-300" : "text-zinc-200"}`}
+                >
                   {link.label}
-                </NavLink>
+                </Link>
               ))}
               <Link to={routes.contact} onClick={() => setOpen(false)} className="rounded-full bg-emerald-500 px-5 py-3 text-center text-sm font-semibold text-[#02110b]">
                 Request demo
@@ -308,7 +391,7 @@ function HeroMockup() {
 
 function Hero() {
   return (
-    <section className="relative overflow-hidden bg-[#030806] pt-30 md:pt-36">
+    <section id="home" className="relative overflow-hidden bg-[#030806] pt-30 md:pt-36">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_14%_15%,rgba(16,185,129,0.16),transparent_28%),radial-gradient(circle_at_85%_22%,rgba(6,95,70,0.18),transparent_24%),linear-gradient(180deg,#04110b_0%,#030806_55%,#020403_100%)]" />
       <div className="relative mx-auto grid max-w-7xl gap-14 px-5 pb-22 pt-10 md:px-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
         <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease: "easeOut" }}>
@@ -356,15 +439,13 @@ function ImpactSection() {
 function SolutionsIntro() {
   return (
     <section className="bg-white py-18 md:py-22">
-      <motion.div {...fadeUp} className="mx-auto max-w-7xl px-5 md:px-8">
-        <div className="text-[1.08rem] font-bold uppercase tracking-[0.22em] text-emerald-600">Solutions</div>
-        <h2 className="mt-4 font-[family-name:var(--font-display)] text-4xl leading-tight text-[#08110e] md:text-6xl">
-          Secure your margins to achieve your mission of delivering excellent care
-        </h2>
-        <p className="mt-5 max-w-4xl text-lg leading-8 text-[#2e2944]">
-          Built to empower your care teams, Medsyra does more than recommend tasks. It takes immediate action on below-license administrative work so staff can focus on delivering the very best patient care.
-        </p>
-      </motion.div>
+      <div className="mx-auto max-w-7xl px-5 md:px-8">
+        <SectionHeading
+          label="Solutions"
+          title="Secure your margins to achieve your mission of delivering excellent care"
+          body="Built to empower your care teams, Medsyra does more than recommend tasks. It takes immediate action on below-license administrative work so staff can focus on delivering the very best patient care."
+        />
+      </div>
     </section>
   );
 }
@@ -798,7 +879,7 @@ function SolutionFeature({ eyebrow, title, body, points, stat, statLabel, image,
     <section className="bg-white pb-20">
       <div className={`mx-auto grid max-w-7xl gap-14 px-5 md:px-8 lg:items-center ${reverse ? "lg:grid-cols-[1.18fr_0.82fr]" : "lg:grid-cols-[0.82fr_1.18fr]"}`}>
         <motion.div {...fadeUp} className={reverse ? "lg:order-2" : ""}>
-          <div className="inline-flex items-center rounded-full border border-emerald-200 bg-emerald-50 px-4 py-2 text-[0.8rem] font-semibold uppercase tracking-[0.22em] text-emerald-700">
+          <div className="text-[0.8rem] font-semibold uppercase tracking-[0.28em] text-emerald-700">
             {eyebrow}
           </div>
           <h2 className="mt-6 font-[family-name:var(--font-display)] text-[3.5rem] leading-[1.02] tracking-[-0.04em] text-[#08110e] md:text-[4.4rem]">{title}</h2>
@@ -919,15 +1000,12 @@ function CareAreas() {
   return (
     <section id="care-areas" className="bg-[#03100b] py-20 text-white md:py-24">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
-        <motion.div {...fadeUp} className="max-w-4xl">
-          <div className="text-[11px] font-bold uppercase tracking-[0.28em] text-emerald-300">Care areas</div>
-          <h2 className="mt-4 font-[family-name:var(--font-display)] text-4xl leading-tight md:text-6xl">
-            Supporting care teams across hospital settings
-          </h2>
-          <p className="mt-5 text-lg leading-8 text-zinc-300">
-            Discover why frontline staff, providers, and hospital leaders trust our AI teammates with their most important initiatives.
-          </p>
-        </motion.div>
+        <SectionHeading
+          label="Care Areas"
+          title="Supporting care teams across hospital settings"
+          body="Discover why frontline staff, providers, and hospital leaders trust our AI teammates with their most important initiatives."
+          theme="dark"
+        />
 
         <div className="mt-10 flex flex-wrap gap-3">
           {careSlides.map((item, index) => (
@@ -1014,7 +1092,7 @@ function Explore() {
   }, [maxIndex]);
 
   return (
-    <section className="relative overflow-hidden bg-white py-20 md:py-24">
+    <section id="explore" className="relative overflow-hidden bg-white py-20 md:py-24">
       <motion.div
         aria-hidden="true"
         animate={{ y: [0, -12, 0], opacity: [0.3, 0.45, 0.3] }}
@@ -1045,12 +1123,11 @@ function Explore() {
       </motion.div>
 
       <div className="relative mx-auto max-w-7xl px-5 md:px-8">
-        <motion.div {...fadeUp}>
-          <div className="text-[11px] font-bold uppercase tracking-[0.28em] text-emerald-600">Explore</div>
-          <h2 className="mt-4 font-[family-name:var(--font-display)] text-4xl leading-tight text-[#08110e] md:text-5xl">
-            More insights, updates & results
-          </h2>
-        </motion.div>
+        <SectionHeading
+          label="Explore"
+          title="More insights, updates & results"
+          body="Browse the latest thinking, product updates, and operational perspectives shaping Medsyra's approach to healthcare automation."
+        />
 
         <div className="relative mt-10 px-12 md:px-16">
           <button
@@ -1348,6 +1425,36 @@ function SiteLayout() {
   );
 }
 
+type PageHeroProps = {
+  eyebrow: string;
+  title: string;
+  body: string;
+  accent: string;
+};
+
+function PageHero({ eyebrow, title, body, accent }: PageHeroProps) {
+  return (
+    <section className="relative overflow-hidden bg-[#020705] pt-30 md:pt-36">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(16,185,129,0.16),transparent_28%),linear-gradient(180deg,#04110b_0%,#020705_100%)]" />
+      <div className="relative mx-auto max-w-7xl px-5 pb-16 pt-10 md:px-8 md:pb-20">
+        <div className="max-w-4xl rounded-[2.2rem] border border-white/8 bg-white/4 p-8 backdrop-blur-sm md:p-10">
+          <div className="text-[11px] font-bold uppercase tracking-[0.28em] text-emerald-300">{eyebrow}</div>
+          <h1 className="mt-4 font-[family-name:var(--font-display)] text-5xl leading-[0.95] tracking-tight text-white md:text-7xl">
+            {title}
+          </h1>
+          <p className="mt-6 max-w-3xl text-lg leading-8 text-zinc-300 md:text-xl">
+            {body}
+          </p>
+          <div className="mt-8 inline-flex items-center gap-3 rounded-full border border-emerald-400/20 bg-black/20 px-4 py-2 text-sm text-zinc-200">
+            <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: accent }} />
+            Medsyra route experience
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function HomePage() {
   return (
     <main>
@@ -1365,7 +1472,13 @@ function HomePage() {
 
 function SolutionsPage() {
   return (
-    <main className="pt-30 md:pt-36">
+    <main>
+      <PageHero
+        eyebrow="Solutions"
+        title="Operational AI solutions built around hospital outcomes"
+        body="Explore the Medsyra product portfolio for surgical growth, perioperative coordination, and inpatient capacity management."
+        accent="#10b981"
+      />
       <SolutionsIntro />
       <Solutions />
       <SecurityBand />
@@ -1375,7 +1488,13 @@ function SolutionsPage() {
 
 function CareAreasPage() {
   return (
-    <main className="pt-30 md:pt-36">
+    <main>
+      <PageHero
+        eyebrow="Care Areas"
+        title="Designed for the teams carrying care delivery forward"
+        body="See how Medsyra supports surgical services, inpatient operations, and hospital leadership with workflow-aware automation."
+        accent="#14b8a6"
+      />
       <CareAreas />
       <Explore />
     </main>
@@ -1384,7 +1503,13 @@ function CareAreasPage() {
 
 function ContactPage() {
   return (
-    <main className="pt-30 md:pt-36">
+    <main>
+      <PageHero
+        eyebrow="Contact"
+        title="Start the operational conversation"
+        body="Connect with Medsyra to review bottlenecks, discuss deployment priorities, and plan the right automation roadmap for your team."
+        accent="#34d399"
+      />
       <ContactForm />
     </main>
   );
