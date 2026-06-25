@@ -61,6 +61,41 @@ const careSlides = [
   },
 ];
 
+const clientSpotlight = {
+  client: "Aspen Medical",
+  address: "Deakin, Australian Capital Territory",
+  headline: "Unlocking capacity and reducing length of stay through AI-driven orchestration",
+  teaser:
+    "Aspen Medical partnered with Medsyra to move beyond manual EHR constraints and establish a proactive system of action for patient flow.",
+  overview:
+    "Aspen Medical is a globally recognized healthcare partner based in Deakin, Australian Capital Territory. Seeking to meet the growing demand for care services, Aspen Medical partnered with Medsyra to move beyond manual workflow constraints and establish a proactive system of action for patient flow.",
+  challenge:
+    "Aspen Medical identified that relying solely on the EHR for case management led to inefficient processes and long lengths of stay. The team needed a way to proactively identify discharge barriers and align multidisciplinary care teams without adding to administrative burden.",
+  solution:
+    "Aspen Medical implemented the Medsyra Inpatient Solution, integrating it directly into Epic to automate discharge planning and sequence key care steps.",
+  features: [
+    "Early Discharge Planning intelligence uses machine learning models trained on local provider notes to help teams set aggressive but achievable discharge dates.",
+    "QCard is a Smart on FHIR application embedded within the patient list navigator to optimize care team alignment during daily rounds.",
+    "Automated Milestone Coordination detects care plan gaps and prompts providers for high-priority orders.",
+    "Flow Prioritization uses machine learning to determine the optimal sequence of orders for ancillary teams and free up capacity faster.",
+  ],
+  impact: [
+    "8,554 excess days saved",
+    "$3.32 million in annualized savings",
+    "23 daily beds of additional capacity created",
+    "10-20% reduction in ED boarding",
+    "3,500 additional patient capacity created through automated flow prioritization",
+  ],
+  quote:
+    "With Medsyra Inpatient Solution we've reduced the length of stay for patients significantly, resulting not only in significant financial savings but also increased access to care.",
+  attribution: "Scott Estep, System Vice President, Nursing Operations & Capacity Management",
+  insights: [
+    "93% of patients now receive early discharge plans.",
+    "Ancillary teams complete 85% of high-priority orders on time.",
+    "The results were achieved in less than six months after launch.",
+  ],
+} as const;
+
 const resources = [
   {
     type: "PRESS RELEASE",
@@ -453,21 +488,23 @@ function SolutionsIntro() {
 function SurgicalGrowthVisual() {
   const [step, setStep] = useState(0);
 
-  useEffect(() => {
-    const interval = window.setInterval(() => {
-      setStep((current) => (current + 1) % 6);
-    }, 850);
-
-    return () => window.clearInterval(interval);
-  }, []);
-
   const rows = [
     "Robotic Optimization",
     "Site of Care Optimization",
     "Strategic Service Line Growth",
   ];
-  const activeRow = Math.floor(step / 2);
-  const enabled = rows.map((_, index) => step >= index * 2 + 1);
+
+  useEffect(() => {
+    const interval = window.setInterval(() => {
+      setStep((current) => (current + 1) % 8);
+    }, 760);
+
+    return () => window.clearInterval(interval);
+  }, []);
+
+  const displayStep = Math.min(step, 5);
+  const activeRow = Math.floor(displayStep / 2);
+  const enabled = rows.map((_, index) => displayStep >= index * 2 + 1);
   const cursorPoints = [
     { x: 0, y: 0 },
     { x: 4, y: 0 },
@@ -493,7 +530,11 @@ function SurgicalGrowthVisual() {
           {rows.map((label, index) => (
             <motion.div
               key={label}
-              animate={{ opacity: enabled[index] ? 1 : 0.58, x: activeRow === index ? 0 : -2 }}
+              animate={{
+                opacity: enabled[index] ? 1 : 0.58,
+                x: activeRow === index ? 0 : -2,
+                scale: activeRow === index ? 1.02 : 1,
+              }}
               transition={{ duration: 0.22 }}
               className="relative flex items-center gap-4 text-xl text-emerald-700"
             >
@@ -505,7 +546,7 @@ function SurgicalGrowthVisual() {
                 />
               </div>
               <span className="font-medium">{label}</span>
-              {activeRow === index && step % 2 === 1 ? (
+              {activeRow === index && displayStep % 2 === 1 ? (
                 <motion.span
                   initial={{ scale: 0.7, opacity: 0.45 }}
                   animate={{ scale: 1.35, opacity: 0 }}
@@ -519,9 +560,9 @@ function SurgicalGrowthVisual() {
       </div>
       <motion.div
         animate={{
-          x: cursorPoints[step].x,
-          y: cursorPoints[step].y,
-          scale: step % 2 === 1 ? 0.94 : 1,
+          x: cursorPoints[displayStep].x,
+          y: cursorPoints[displayStep].y,
+          scale: displayStep % 2 === 1 ? 0.94 : 1,
         }}
         transition={{ duration: 0.36, ease: "easeInOut" }}
         className="pointer-events-none absolute left-[4.55rem] top-[9.05rem] z-10 text-zinc-900"
@@ -535,15 +576,6 @@ function SurgicalGrowthVisual() {
 }
 
 function PATProgramVisual() {
-  const [messageStep, setMessageStep] = useState(0);
-
-  useEffect(() => {
-    const interval = window.setInterval(() => {
-      setMessageStep((current) => (current + 1) % 3);
-    }, 1800);
-    return () => window.clearInterval(interval);
-  }, []);
-
   return (
     <motion.div
       initial={{ opacity: 0, x: -24 }}
@@ -646,11 +678,7 @@ function PATProgramVisual() {
               </div>
             </div>
 
-            <motion.div
-              animate={{ y: [0, -4, 0] }}
-              transition={{ duration: 2.4, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
-              className="absolute left-[32%] top-8 z-20 w-[15.5rem] overflow-hidden rounded-[2.1rem] border-[5px] border-[#10b981] bg-white shadow-[0_18px_50px_rgba(6,78,59,0.18)]"
-            >
+            <div className="absolute left-[32%] top-8 z-20 w-[15.5rem] overflow-hidden rounded-[2.1rem] border-[5px] border-[#10b981] bg-white shadow-[0_18px_50px_rgba(6,78,59,0.18)]">
               <div className="rounded-[1.7rem] bg-white">
                 <div className="flex items-center justify-between border-b border-zinc-200 px-4 py-3">
                   <div className="flex items-center gap-3">
@@ -670,28 +698,14 @@ function PATProgramVisual() {
                   <div className="max-w-[12.75rem] rounded-[1rem] bg-zinc-100 px-4 py-3">
                     Hi Danny, I'm Quin, the digital assistant from Medsyra helping your nurses prepare for your upcoming surgery.
                   </div>
-                  <motion.div
-                    key={messageStep}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.35 }}
-                    className="ml-auto max-w-[11rem] rounded-[1rem] bg-emerald-50 px-4 py-3 text-[#047857]"
-                  >
-                    {[
-                      "Tomorrow morning works best for me.",
-                      "Can you text the medication instructions too?",
-                      "I may need to reschedule if my ride changes.",
-                    ][messageStep]}
-                  </motion.div>
+                  <div className="ml-auto max-w-[11rem] rounded-[1rem] bg-emerald-50 px-4 py-3 text-[#047857]">
+                    Can you text the medication instructions too?
+                  </div>
                 </div>
               </div>
-            </motion.div>
+            </div>
 
-            <motion.div
-              animate={{ x: [0, 6, 0], y: [0, -6, 0] }}
-              transition={{ duration: 2.1, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut", delay: 0.2 }}
-              className="absolute right-5 top-[10.6rem] z-30 w-[11.5rem] rounded-[1.2rem] border border-[#047857] bg-white shadow-[0_12px_30px_rgba(6,78,59,0.18)]"
-            >
+            <div className="absolute right-5 top-[10.6rem] z-30 w-[11.5rem] rounded-[1.2rem] border border-[#047857] bg-white shadow-[0_12px_30px_rgba(6,78,59,0.18)]">
               <div className="rounded-t-[1.2rem] bg-[#065f46] px-4 py-3 text-sm font-semibold text-white">Document Requests</div>
               <div className="space-y-4 p-4">
                 {Array.from({ length: 3 }).map((_, index) => (
@@ -704,7 +718,7 @@ function PATProgramVisual() {
                   </div>
                 ))}
               </div>
-            </motion.div>
+            </div>
           </div>
         </div>
       </div>
@@ -713,14 +727,7 @@ function PATProgramVisual() {
 }
 
 function InpatientCapacityVisual() {
-  const [activeBar, setActiveBar] = useState(3);
-
-  useEffect(() => {
-    const interval = window.setInterval(() => {
-      setActiveBar((current) => (current + 1) % 10);
-    }, 900);
-    return () => window.clearInterval(interval);
-  }, []);
+  const activeBar = 3;
 
   return (
     <motion.div
@@ -990,13 +997,6 @@ function CareAreas() {
   const [active, setActive] = useState(0);
   const slide = careSlides[active];
 
-  useEffect(() => {
-    const interval = window.setInterval(() => {
-      setActive((current) => (current + 1) % careSlides.length);
-    }, 4500);
-    return () => window.clearInterval(interval);
-  }, []);
-
   return (
     <section id="care-areas" className="bg-[#03100b] py-20 text-white md:py-24">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
@@ -1054,6 +1054,305 @@ function CareAreas() {
   );
 }
 
+function ClientSpotlight() {
+  const [open, setOpen] = useState(false);
+  const featurePreview = clientSpotlight.features.slice(0, 2);
+  const impactPreview = clientSpotlight.impact.slice(0, 3);
+
+  return (
+    <section className="bg-white py-20 font-[family-name:var(--font-display)] md:py-24">
+      <div className="mx-auto max-w-7xl px-5 md:px-8">
+        <motion.div {...fadeUp} className="overflow-hidden rounded-[2rem] bg-[#3b0a78] text-white shadow-[0_24px_70px_rgba(59,10,120,0.28)]">
+          <div className="grid gap-10 p-8 md:p-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-end">
+            <div className="relative">
+              <div className="mb-6 flex items-center gap-4">
+                <img src="/aspenMedical.png" alt="Aspen Medical" className="h-12 w-auto" />
+                <div className="min-w-0">
+                  <div className="text-[11px] font-bold uppercase tracking-[0.28em] text-violet-200">Client Spotlight</div>
+                  <div className="mt-1 text-sm font-medium text-violet-100">{clientSpotlight.address}</div>
+                </div>
+              </div>
+              <h3 className="max-w-4xl font-[family-name:var(--font-display)] text-4xl leading-[0.98] md:text-6xl">
+                {clientSpotlight.headline}
+              </h3>
+              <p className="mt-5 max-w-3xl text-base leading-8 text-violet-100 md:text-lg">
+                {clientSpotlight.teaser}
+              </p>
+
+              <div className="mt-8 flex flex-wrap gap-3">
+                {featurePreview.map((item) => (
+                  <div
+                    key={item}
+                    className="rounded-full border border-white/12 bg-white/8 px-4 py-2 text-sm leading-none text-violet-50"
+                  >
+                    {item}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-4 lg:items-end">
+              <div className="grid gap-3 sm:grid-cols-2 lg:w-full">
+                {impactPreview.map((item) => (
+                  <div key={item} className="rounded-[1.25rem] border border-white/10 bg-white/8 px-4 py-4 text-base font-semibold leading-tight text-violet-50">
+                    {item}
+                  </div>
+                ))}
+              </div>
+              <button
+                type="button"
+                onClick={() => setOpen(true)}
+                className="inline-flex items-center justify-center rounded-full bg-[#42e6d0] px-7 py-4 text-base font-semibold text-[#2c0071] transition-colors hover:bg-[#6af0df]"
+              >
+                Read more
+              </button>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[60] flex items-center justify-center bg-black/70 px-4 py-6"
+            onClick={() => setOpen(false)}
+          >
+            <motion.div
+              initial={{ opacity: 0, y: 18, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 18, scale: 0.98 }}
+              transition={{ duration: 0.25, ease: "easeOut" }}
+              onClick={(event) => event.stopPropagation()}
+              className="max-h-[90vh] w-full max-w-5xl overflow-y-auto rounded-[2rem] bg-white p-6 text-[#08110e] shadow-[0_30px_90px_rgba(0,0,0,0.4)] md:p-10"
+            >
+              <div className="flex items-start justify-between gap-6">
+                <div>
+                  <img src="/aspenMedical.png" alt="Aspen Medical" className="h-12 w-auto" />
+                  <div className="mt-4 text-[11px] font-bold uppercase tracking-[0.28em] text-violet-700">Client Spotlight</div>
+                  <div className="mt-3 text-sm font-semibold uppercase tracking-[0.22em] text-zinc-500">{clientSpotlight.address}</div>
+                  <h3 className="mt-4 max-w-4xl font-[family-name:var(--font-display)] text-3xl leading-tight md:text-5xl">
+                    {clientSpotlight.headline}
+                  </h3>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setOpen(false)}
+                  className="rounded-full border border-zinc-200 p-2 text-zinc-500 transition-colors hover:border-zinc-300 hover:text-zinc-800"
+                  aria-label="Close spotlight"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+
+              <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_0.9fr]">
+                <div className="space-y-6">
+                  <div>
+                    <div className="text-[11px] font-bold uppercase tracking-[0.22em] text-violet-700">Overview</div>
+                    <p className="mt-3 text-base leading-8 text-zinc-700">{clientSpotlight.overview}</p>
+                  </div>
+                  <div>
+                    <div className="text-[11px] font-bold uppercase tracking-[0.22em] text-violet-700">The Challenge</div>
+                    <p className="mt-3 text-base leading-8 text-zinc-700">{clientSpotlight.challenge}</p>
+                  </div>
+                  <div>
+                    <div className="text-[11px] font-bold uppercase tracking-[0.22em] text-violet-700">The Solution</div>
+                    <p className="mt-3 text-base leading-8 text-zinc-700">{clientSpotlight.solution}</p>
+                  </div>
+                  <div>
+                    <div className="text-[11px] font-bold uppercase tracking-[0.22em] text-violet-700">Features Used</div>
+                    <div className="mt-4 space-y-3">
+                      {clientSpotlight.features.map((item) => (
+                        <div key={item} className="rounded-[1rem] border border-violet-100 bg-violet-50 px-4 py-3 text-sm leading-7 text-zinc-700">
+                          {item}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-6">
+                  <div className="rounded-[1.5rem] bg-[#f6f0ff] p-6">
+                    <div className="text-[11px] font-bold uppercase tracking-[0.22em] text-violet-700">Proven Impact</div>
+                    <div className="mt-4 space-y-3">
+                      {clientSpotlight.impact.map((item) => (
+                        <div key={item} className="rounded-[1rem] bg-white px-4 py-3 text-base font-semibold leading-tight text-zinc-700 shadow-sm">
+                          {item}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="rounded-[1.5rem] bg-[#08110e] p-6 text-white">
+                    <div className="text-[11px] font-bold uppercase tracking-[0.22em] text-emerald-300">Voice of the Client</div>
+                    <p className="mt-4 text-lg leading-8 text-zinc-100">{clientSpotlight.quote}</p>
+                    <div className="mt-5 text-sm font-semibold text-emerald-300">{clientSpotlight.attribution}</div>
+                  </div>
+
+                  <div className="rounded-[1.5rem] border border-violet-100 bg-white p-6">
+                    <div className="text-[11px] font-bold uppercase tracking-[0.22em] text-violet-700">Strategic Insights</div>
+                    <div className="mt-4 space-y-3">
+                      {clientSpotlight.insights.map((item) => (
+                        <div key={item} className="rounded-[1rem] bg-zinc-50 px-4 py-3 text-sm leading-7 text-zinc-700">
+                          {item}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </section>
+  );
+}
+
+function ClientSpotlightInline() {
+  const [open, setOpen] = useState(false);
+  const impactPreview = clientSpotlight.impact.slice(0, 3);
+
+  return (
+    <section className="bg-[#fbfbfc] py-20 md:py-24">
+      <div className="mx-auto max-w-7xl px-5 md:px-8">
+        <div className="overflow-hidden rounded-[2rem] border border-violet-100 bg-white text-[#0f1720] shadow-[0_20px_50px_rgba(15,23,32,0.08)]">
+          <div className="p-8 md:p-10">
+            <div>
+              <div className="mb-6 flex items-center gap-4">
+                <img src="/aspenMedical.png" alt="Aspen Medical" className="h-12 w-auto shrink-0" />
+                <div>
+                  <div className="text-[11px] font-bold uppercase tracking-[0.34em] text-violet-700">Client Spotlight</div>
+                  <div className="mt-1 text-sm font-medium tracking-[0.18em] text-slate-500">{clientSpotlight.address}</div>
+                </div>
+              </div>
+
+              <h3 className="max-w-6xl text-4xl font-semibold leading-[1.02] tracking-[-0.03em] text-[#0d1412] md:text-6xl lg:text-[4.35rem]">
+                {clientSpotlight.headline}
+              </h3>
+            </div>
+
+            <div className="mt-8 grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
+              <div>
+                <p className="max-w-3xl text-lg leading-9 text-slate-700">
+                  {clientSpotlight.teaser}
+                </p>
+
+                <div className="mt-8 space-y-4">
+                  {clientSpotlight.features.slice(0, 3).map((item) => (
+                    <div key={item} className="flex items-start gap-3 text-base leading-8 text-slate-700 md:text-lg">
+                      <span className="mt-3 h-2 w-2 shrink-0 rounded-full bg-[#42e6d0]" />
+                      <span>{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-4 lg:items-end">
+                <div className="grid gap-3 sm:grid-cols-2 lg:w-full">
+                  {impactPreview.map((item) => (
+                    <div key={item} className="rounded-[1.25rem] border border-violet-100 bg-[#f6f0ff] px-4 py-5 text-lg font-semibold leading-snug text-[#1b2230] shadow-[0_6px_18px_rgba(109,40,217,0.08)]">
+                      {item}
+                    </div>
+                  ))}
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setOpen((current) => !current)}
+                  className="inline-flex items-center justify-center rounded-full bg-[#42e6d0] px-7 py-4 text-base font-semibold text-[#2c0071] transition-colors hover:bg-[#6af0df]"
+                >
+                  {open ? "Read less" : "Read more"}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <AnimatePresence>
+          {open && (
+            <motion.div
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 18 }}
+              transition={{ duration: 0.25, ease: "easeOut" }}
+              className="mt-6 rounded-[2rem] border border-slate-100 bg-white p-6 text-[#0f1720] shadow-[0_20px_50px_rgba(15,23,32,0.08)] md:p-10"
+            >
+              <div className="flex items-start justify-between gap-6">
+                <div>
+                  <div className="text-[11px] font-bold uppercase tracking-[0.34em] text-violet-700">Client Spotlight</div>
+                  <div className="mt-4 text-sm font-medium tracking-[0.18em] text-slate-500">{clientSpotlight.address}</div>
+                  <h3 className="mt-4 max-w-4xl text-3xl font-semibold leading-tight tracking-[-0.03em] text-[#0d1412] md:text-5xl">
+                    {clientSpotlight.headline}
+                  </h3>
+                </div>
+              </div>
+
+              <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_0.9fr]">
+                <div className="space-y-6">
+                  <div>
+                    <div className="text-[11px] font-bold uppercase tracking-[0.22em] text-violet-700">Overview</div>
+                    <p className="mt-3 text-base leading-9 text-slate-700">{clientSpotlight.overview}</p>
+                  </div>
+                  <div>
+                    <div className="text-[11px] font-bold uppercase tracking-[0.22em] text-violet-700">The Challenge</div>
+                    <p className="mt-3 text-base leading-9 text-slate-700">{clientSpotlight.challenge}</p>
+                  </div>
+                  <div>
+                    <div className="text-[11px] font-bold uppercase tracking-[0.22em] text-violet-700">The Solution</div>
+                    <p className="mt-3 text-base leading-9 text-slate-700">{clientSpotlight.solution}</p>
+                  </div>
+                  <div>
+                    <div className="text-[11px] font-bold uppercase tracking-[0.22em] text-violet-700">Features Used</div>
+                    <div className="mt-4 grid gap-3">
+                      {clientSpotlight.features.map((item) => (
+                        <div key={item} className="rounded-[1rem] border border-violet-100 bg-[#faf7ff] px-4 py-4 text-sm leading-7 text-slate-700">
+                          {item}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-6">
+                  <div className="rounded-[1.5rem] bg-[#f6f0ff] p-6">
+                    <div className="text-[11px] font-bold uppercase tracking-[0.22em] text-violet-700">Proven Impact</div>
+                    <div className="mt-4 grid gap-3">
+                      {clientSpotlight.impact.map((item) => (
+                        <div key={item} className="rounded-[1rem] bg-white px-4 py-4 text-base font-semibold leading-snug text-[#1b2230] shadow-sm">
+                          {item}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="rounded-[1.5rem] bg-[#0f1720] p-6 text-white">
+                    <div className="text-[11px] font-bold uppercase tracking-[0.22em] text-emerald-300">Voice of the Client</div>
+                    <p className="mt-4 text-lg leading-9 text-zinc-100">{clientSpotlight.quote}</p>
+                    <div className="mt-5 text-sm font-semibold text-emerald-300">{clientSpotlight.attribution}</div>
+                  </div>
+
+                  <div className="rounded-[1.5rem] border border-violet-100 bg-white p-6">
+                    <div className="text-[11px] font-bold uppercase tracking-[0.22em] text-violet-700">Strategic Insights</div>
+                    <div className="mt-4 space-y-3">
+                      {clientSpotlight.insights.map((item) => (
+                        <div key={item} className="rounded-[1rem] bg-zinc-50 px-4 py-3 text-sm leading-7 text-slate-700">
+                          {item}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </section>
+  );
+}
+
 function Explore() {
   const [index, setIndex] = useState(0);
   const [cardsPerView, setCardsPerView] = useState(3);
@@ -1093,10 +1392,8 @@ function Explore() {
 
   return (
     <section id="explore" className="relative overflow-hidden bg-white py-20 md:py-24">
-      <motion.div
+      <div
         aria-hidden="true"
-        animate={{ y: [0, -12, 0], opacity: [0.3, 0.45, 0.3] }}
-        transition={{ duration: 6, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
         className="absolute left-6 top-10 hidden gap-2 md:flex"
       >
         {[48, 72, 58, 84, 42].map((height, barIndex) => (
@@ -1106,11 +1403,9 @@ function Explore() {
             style={{ height }}
           />
         ))}
-      </motion.div>
-      <motion.div
+      </div>
+      <div
         aria-hidden="true"
-        animate={{ y: [0, 10, 0], opacity: [0.2, 0.35, 0.2] }}
-        transition={{ duration: 5.4, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut", delay: 0.4 }}
         className="absolute right-10 top-16 hidden gap-2 lg:flex"
       >
         {[60, 38, 74, 52].map((height, barIndex) => (
@@ -1120,7 +1415,7 @@ function Explore() {
             style={{ height }}
           />
         ))}
-      </motion.div>
+      </div>
 
       <div className="relative mx-auto max-w-7xl px-5 md:px-8">
         <SectionHeading
@@ -1151,13 +1446,13 @@ function Explore() {
           >
             {resources.map((item) => (
               <div key={item.title} className="w-full shrink-0 px-3 first:pl-0 last:pr-0 md:w-1/2 lg:w-1/3">
-                <article className="h-full overflow-hidden rounded-[2rem] border border-emerald-100 bg-[#f6fbf8]">
+                <article className="flex h-full flex-col overflow-hidden rounded-[2rem] border border-emerald-100 bg-[#f6fbf8]">
                   <img src={item.image} alt={item.title} className="h-56 w-full object-cover" />
-                  <div className="p-7">
+                  <div className="flex min-h-[25rem] flex-1 flex-col p-7">
                     <div className="text-[11px] font-bold uppercase tracking-[0.22em] text-emerald-700">{item.type}</div>
                     <h3 className="mt-4 font-[family-name:var(--font-display)] text-2xl leading-tight text-[#08110e]">{item.title}</h3>
                     <p className="mt-4 text-sm leading-7 text-zinc-600">{item.copy}</p>
-                    <Link to={routes.contact} className="mt-6 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.16em] text-emerald-700">
+                    <Link to={routes.contact} className="mt-auto inline-flex items-center gap-2 pt-8 text-sm font-semibold uppercase tracking-[0.16em] text-emerald-700">
                       {item.cta} <ArrowRight className="h-4 w-4" />
                     </Link>
                   </div>
@@ -1279,16 +1574,12 @@ function ContactForm() {
     <section id="contact" className="bg-[#010302] py-20 text-white md:py-24">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
         <div className="relative overflow-hidden rounded-[2.5rem] border border-white/8 bg-[radial-gradient(circle_at_top_left,rgba(16,185,129,0.24),transparent_28%),radial-gradient(circle_at_bottom_right,rgba(16,185,129,0.16),transparent_24%),linear-gradient(180deg,#08110e_0%,#040907_100%)] p-7 md:p-10">
-          <motion.img
-            animate={{ y: [0, -10, 0] }}
-            transition={{ duration: 5.5, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+          <img
             src="/mirror-assets/Frame-90.png"
             alt=""
             className="pointer-events-none absolute -left-6 bottom-6 hidden w-28 opacity-85 md:block"
           />
-          <motion.img
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 6.2, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+          <img
             src="/mirror-assets/Frame-89.png"
             alt=""
             className="pointer-events-none absolute -right-6 top-6 hidden w-36 opacity-85 md:block"
@@ -1463,6 +1754,7 @@ function HomePage() {
       <SolutionsIntro />
       <Solutions />
       <CareAreas />
+      <ClientSpotlightInline />
       <Explore />
       <SecurityBand />
       <ContactForm />
