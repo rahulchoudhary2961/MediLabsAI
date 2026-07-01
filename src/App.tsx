@@ -28,6 +28,8 @@ const routes = {
   solutions: "/solutions",
   careAreas: "/care-areas",
   contact: "/contact",
+  privacyPolicy: "/privacy-policy",
+  termsOfUse: "/terms-of-use",
 } as const;
 
 const impacts = [
@@ -122,9 +124,9 @@ const resources = [
   },
   {
     type: "BLOG",
-    title: "Medsyra earns 92.5 in KLAS ratings",
+    title: "Operational AI for hospital throughput",
     copy:
-      "Delivering real results in capacity management, Medsyra continues to earn strong customer ratings and industry recognition for transforming hospital operations.",
+      "See how Medsyra combines workflow automation, smarter prioritization, and embedded assistants to support hospital operations.",
     image: "/mirror-assets/Featured-Img_15-Blog.jpg",
     cta: "Read now",
   },
@@ -137,25 +139,6 @@ const resources = [
     cta: "Read now",
   },
 ];
-
-const solutionHighlights = [
-  {
-    label: "Surgical Growth",
-    value: "36%",
-    description: "Robotics growth unlocked with strategy tied directly to OR execution.",
-  },
-  {
-    label: "Perioperative Coordination",
-    value: "40%",
-    description: "Fewer surgery cancellations through earlier patient readiness and admin follow-through.",
-  },
-  {
-    label: "Inpatient Capacity",
-    value: "15-30%",
-    description: "Excess-day reduction driven by discharge planning that starts sooner and moves faster.",
-  },
-];
-
 
 const fadeUp = {
   initial: { opacity: 0, y: 26 },
@@ -520,57 +503,74 @@ function SurgicalGrowthVisual() {
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.65, ease: "easeOut" }}
-      className="relative rounded-[2rem] bg-white p-8 shadow-[0_25px_70px_rgba(6,78,59,0.12)]"
+      className="relative w-full overflow-hidden rounded-[2rem] border border-emerald-100 bg-[linear-gradient(180deg,#f7fbf8_0%,#eef8f2_100%)] p-6 shadow-[0_25px_70px_rgba(6,78,59,0.12)]"
     >
-      <div className="rounded-[1.4rem] border border-emerald-100 bg-white shadow-[0_18px_40px_rgba(15,23,42,0.12)]">
-        <div className="rounded-t-[1.4rem] bg-[linear-gradient(135deg,#064e3b,#10b981_56%,#047857)] px-6 py-5 text-2xl font-semibold text-white">
-          Medsyra Strategic Control Panel
+      <div className="grid min-h-[34rem] gap-5 lg:grid-cols-[1.1fr_0.9fr]">
+        <div className="rounded-[1.6rem] border border-emerald-100 bg-white p-6 shadow-[0_18px_40px_rgba(15,23,42,0.12)]">
+          <div className="rounded-[1.3rem] bg-[linear-gradient(135deg,#064e3b,#10b981_56%,#047857)] px-6 py-5 text-2xl font-semibold text-white">
+            Medsyra Strategic Control Panel
+          </div>
+          <div className="mt-6 grid gap-4">
+            {rows.map((label, index) => (
+              <motion.div
+                key={label}
+                animate={{
+                  opacity: enabled[index] ? 1 : 0.58,
+                  x: activeRow === index ? 0 : -2,
+                  scale: activeRow === index ? 1.02 : 1,
+                }}
+                transition={{ duration: 0.22 }}
+                className="relative flex min-h-[6.25rem] items-center gap-3 rounded-[1.2rem] border border-emerald-100 bg-[#f7fbf8] px-4 py-4 text-[15px] leading-6 text-emerald-700"
+              >
+                <div className={`relative h-6 w-12 rounded-full transition-colors ${enabled[index] ? "bg-[#14b8a6]" : "bg-zinc-200"}`}>
+                  <motion.div
+                    animate={{ x: enabled[index] ? 24 : 2 }}
+                    transition={{ type: "spring", stiffness: 360, damping: 22 }}
+                    className="absolute top-1 h-4 w-4 rounded-full bg-white shadow"
+                  />
+                </div>
+                <span className="max-w-[11.5rem] font-medium">{label}</span>
+                {activeRow === index && displayStep % 2 === 1 ? (
+                  <motion.span
+                    initial={{ scale: 0.7, opacity: 0.45 }}
+                    animate={{ scale: 1.35, opacity: 0 }}
+                    transition={{ duration: 0.42 }}
+                    className="absolute left-2 top-0 h-6 w-6 rounded-full border border-[#14b8a6]"
+                  />
+                ) : null}
+              </motion.div>
+            ))}
+          </div>
         </div>
-        <div className="space-y-8 px-6 py-6">
-          {rows.map((label, index) => (
-            <motion.div
-              key={label}
-              animate={{
-                opacity: enabled[index] ? 1 : 0.58,
-                x: activeRow === index ? 0 : -2,
-                scale: activeRow === index ? 1.02 : 1,
-              }}
-              transition={{ duration: 0.22 }}
-              className="relative flex items-center gap-4 text-xl text-emerald-700"
-            >
-              <div className={`relative h-6 w-12 rounded-full transition-colors ${enabled[index] ? "bg-[#14b8a6]" : "bg-zinc-200"}`}>
-                <motion.div
-                  animate={{ x: enabled[index] ? 24 : 2 }}
-                  transition={{ type: "spring", stiffness: 360, damping: 22 }}
-                  className="absolute top-1 h-4 w-4 rounded-full bg-white shadow"
-                />
+          <div className="grid gap-4 rounded-[1.6rem] border border-emerald-100 bg-[#08110e] p-5 text-white">
+            <div className="overflow-hidden rounded-[1.3rem] border border-white/8">
+              <img src="/mirror-assets/surgical-services-1.png" alt="Surgical growth visual" className="aspect-[16/10] w-full object-cover" />
+            </div>
+          <div className="grid gap-4 sm:grid-cols-3">
+            {[
+              { label: "Blocks released", value: "14" },
+              { label: "Cases routed", value: "38" },
+              { label: "Robotic hours", value: "92%" },
+            ].map((item) => (
+              <div key={item.label} className="rounded-[1.1rem] border border-white/8 bg-white/5 p-4">
+                <div className="text-[9px] uppercase tracking-[0.14em] text-emerald-300">{item.label}</div>
+                <div className="mt-2 text-2xl font-semibold text-white">{item.value}</div>
               </div>
-              <span className="font-medium">{label}</span>
-              {activeRow === index && displayStep % 2 === 1 ? (
-                <motion.span
-                  initial={{ scale: 0.7, opacity: 0.45 }}
-                  animate={{ scale: 1.35, opacity: 0 }}
-                  transition={{ duration: 0.42 }}
-                  className="absolute left-2 top-0 h-6 w-6 rounded-full border border-[#14b8a6]"
-                />
-              ) : null}
-            </motion.div>
-          ))}
+            ))}
+          </div>
+          <div className="rounded-[1.3rem] border border-white/8 bg-white/5 p-4">
+            <div className="text-[10px] uppercase tracking-[0.18em] text-emerald-300">Current sequence</div>
+            <div className="mt-4 space-y-3">
+              {["Find time", "Release block", "Match case", "Fill white space"].map((item, index) => (
+                <div key={item} className="flex items-center gap-3 text-[12px] text-zinc-200">
+                  <div className="flex h-7 w-7 items-center justify-center rounded-full bg-emerald-400/15 text-emerald-300">{index + 1}</div>
+                  <span className="leading-5">{item}</span>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
-      <motion.div
-        animate={{
-          x: cursorPoints[displayStep].x,
-          y: cursorPoints[displayStep].y,
-          scale: displayStep % 2 === 1 ? 0.94 : 1,
-        }}
-        transition={{ duration: 0.36, ease: "easeInOut" }}
-        className="pointer-events-none absolute left-[4.55rem] top-[9.05rem] z-10 text-zinc-900"
-      >
-        <svg width="12" height="15" viewBox="0 0 24 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M3 2.5V25.5L9.6 18.8L14.2 29L19.1 27L14.4 16.9L23 16L3 2.5Z" fill="white" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
-        </svg>
-      </motion.div>
     </motion.div>
   );
 }
@@ -582,143 +582,42 @@ function PATProgramVisual() {
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.65, ease: "easeOut" }}
-      className="relative rounded-[2rem] bg-[#eef9f5] p-6 shadow-[0_25px_70px_rgba(6,78,59,0.12)]"
+      className="relative w-full rounded-[2rem] bg-[linear-gradient(180deg,#eef9f5_0%,#f8fcfa_100%)] p-6 shadow-[0_25px_70px_rgba(6,78,59,0.12)]"
     >
-      <div className="relative overflow-hidden rounded-[1.7rem] border border-emerald-100 bg-white">
-        <div className="absolute inset-x-0 top-0 h-5 bg-[#065f46]" />
-        <div className="grid min-h-[34rem] grid-cols-[8rem_1.15fr_1fr] gap-0 pt-5">
-          <div className="bg-[#064e3b] text-white">
-            <div className="px-6 py-4 text-3xl font-semibold">Medsyra</div>
-            <div className="space-y-1 px-0 py-2 text-sm">
-              {["Today", "Patients", "Messages", "Document Requests"].map((item, index) => (
-                <div key={item} className={`px-6 py-3 ${index === 0 ? "bg-[linear-gradient(90deg,#10b981,#047857)]" : ""}`}>
-                  {item}
-                </div>
-              ))}
-            </div>
+      <div className="grid gap-5 lg:grid-cols-[1.05fr_0.95fr]">
+        <div className="rounded-[1.6rem] border border-emerald-100 bg-white p-6 shadow-[0_18px_40px_rgba(15,23,42,0.12)]">
+          <div className="overflow-hidden rounded-[1.35rem] border border-emerald-100 bg-[#07100d]">
+            <img src="/mirror-assets/Leadership-1024x900.png" alt="PAT program visual" className="aspect-[16/10] w-full object-cover" />
           </div>
-
-          <div className="border-r border-zinc-200 bg-white">
-            <div className="px-5 py-5">
-              <div className="text-xs text-zinc-500">Danny Miller</div>
-              <div className="mt-1 text-4xl font-semibold text-[#065f46]">PAT Call</div>
-              <div className="mt-4 inline-flex rounded-lg border border-zinc-400 px-3 py-1.5 text-xs text-zinc-600">Transcript</div>
-            </div>
-            <div className="border-t border-zinc-100 px-5 py-4">
-              <div className="text-[2rem] font-semibold text-zinc-800">Transcript</div>
-              <div className="mt-5 space-y-4">
-                {Array.from({ length: 6 }).map((_, index) => {
-                  const isYou = index % 2 === 1;
-                  return (
-                    <div key={index} className="space-y-2">
-                      <div className={`text-sm font-semibold ${isYou ? "text-emerald-500" : "text-zinc-600"}`}>{isYou ? "You" : "Patient"}</div>
-                      <div className={`space-y-2 ${isYou ? "pl-6" : ""}`}>
-                        <div className="h-1.5 w-full rounded-full bg-zinc-200" />
-                        <div className="h-1.5 w-[86%] rounded-full bg-zinc-200" />
-                        <div className="h-1.5 w-[74%] rounded-full bg-zinc-200" />
-                      </div>
-                    </div>
-                  );
-                })}
+          <div className="mt-5 grid gap-3 sm:grid-cols-3">
+            {[
+              { label: "Patients reached", value: "96" },
+              { label: "Records reviewed", value: "58" },
+              { label: "Tasks resolved", value: "24" },
+            ].map((item) => (
+              <div key={item.label} className="rounded-2xl border border-zinc-100 bg-[#fbfdfc] p-4">
+                <div className="text-[10px] uppercase tracking-[0.16em] text-emerald-700">{item.label}</div>
+                <div className="mt-2 text-2xl font-semibold text-[#08110e]">{item.value}</div>
               </div>
-            </div>
+            ))}
           </div>
+        </div>
 
-          <div className="relative bg-[#fbfaf8]">
-            <div className="grid h-full grid-cols-[1fr_13rem] gap-4 px-4 py-14">
-              <div className="space-y-4">
-                <div className="rounded-2xl border border-zinc-100 bg-white p-4 shadow-sm">
-                  <div className="mb-3 text-xl font-semibold text-zinc-700">Interview Highlights</div>
-                  <div className="space-y-3">
-                    <div className="rounded-xl border border-zinc-100 p-3">
-                      <div className="text-sm font-semibold text-emerald-600">Ask about allergies</div>
-                      <div className="mt-2 h-1.5 w-24 rounded-full bg-zinc-200" />
-                    </div>
-                    <div className="rounded-xl border border-zinc-100 p-3">
-                      <div className="text-sm font-semibold text-emerald-600">Danny drinks alcohol</div>
-                      <div className="mt-2 h-1.5 w-20 rounded-full bg-zinc-200" />
-                    </div>
-                  </div>
-                </div>
-                <div className="rounded-2xl border border-zinc-100 bg-white p-4 shadow-sm">
-                  <div className="mb-3 text-xl font-semibold text-zinc-700">Medication Instructions</div>
-                  <div className="space-y-3">
-                    {Array.from({ length: 3 }).map((_, index) => (
-                      <div key={index} className="rounded-xl border border-zinc-100 p-3">
-                        <div className="h-1.5 w-28 rounded-full bg-zinc-200" />
-                        <div className="mt-2 h-1.5 w-20 rounded-full bg-zinc-200" />
-                      </div>
-                    ))}
-                  </div>
-                </div>
+        <div className="rounded-[1.6rem] border border-emerald-100 bg-[#08110e] p-6 text-white shadow-[0_18px_40px_rgba(15,23,42,0.12)]">
+          <div className="text-[11px] font-bold uppercase tracking-[0.2em] text-emerald-300">PAT Workflow</div>
+          <div className="mt-5 space-y-4">
+            {[
+              "AI Patient Concierge reaches patients through voice, text, and email to gather intake information and answer questions.",
+              "Intelligent Document Management processes faxed, scanned, or emailed records to reduce manual data entry.",
+              "PAT Assist and workflow support help nurses prioritize worklists, summarize charts, and keep preparation moving.",
+            ].map((item) => (
+              <div key={item} className="rounded-2xl border border-white/8 bg-white/5 px-4 py-4 text-[13px] leading-6 text-zinc-200">
+                {item}
               </div>
-
-              <div className="relative">
-                <div className="mx-auto h-[21rem] w-[13rem] rounded-[1.2rem] border-[6px] border-zinc-300 bg-white p-3 shadow-sm">
-                  <div className="text-[11px] font-semibold text-zinc-600">Request documents</div>
-                  <div className="mt-3 space-y-2">
-                    {["Lisa Brown", "Dr. Perry Smith", "Abigail Health", "(555)-234-2233", "(555)-888-5641"].map((item) => (
-                      <div key={item} className="rounded-md border border-zinc-200 px-2 py-2 text-[10px] text-zinc-500">
-                        {item}
-                      </div>
-                    ))}
-                  </div>
-                  <div className="mt-4 text-[10px] font-semibold text-zinc-500">Documents Needed</div>
-                  <div className="mt-2 flex flex-wrap gap-1.5">
-                    {["Hospital Records", "Imaging", "PCP Awards", "Cardiac", "Pulmonary and PFTs", "History & Physical", "Discharge Summary", "ER Record", "OP Reports"].map((tag, index) => (
-                      <div key={tag} className={`rounded px-1.5 py-1 text-[8px] ${index === 0 ? "bg-emerald-400 text-[#04100a]" : "bg-zinc-100 text-zinc-600"}`}>
-                        {tag}
-                      </div>
-                    ))}
-                  </div>
-                  <div className="mt-4 flex justify-end">
-                    <div className="rounded-md bg-[#047857] px-3 py-2 text-[10px] font-semibold text-white">Preview</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="absolute left-[32%] top-8 z-20 w-[15.5rem] overflow-hidden rounded-[2.1rem] border-[5px] border-[#10b981] bg-white shadow-[0_18px_50px_rgba(6,78,59,0.18)]">
-              <div className="rounded-[1.7rem] bg-white">
-                <div className="flex items-center justify-between border-b border-zinc-200 px-4 py-3">
-                  <div className="flex items-center gap-3">
-                    <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#f3d8c8] text-xs font-semibold text-[#7c2d12]">Q</div>
-                    <div>
-                      <div className="text-[11px] font-medium text-zinc-700">Quin</div>
-                      <div className="text-[10px] text-zinc-500">Memorial Health</div>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <div className="h-1.5 w-1.5 rounded-full bg-zinc-300" />
-                    <div className="h-1.5 w-1.5 rounded-full bg-zinc-300" />
-                    <div className="h-3 w-5 rounded-full border border-sky-400" />
-                  </div>
-                </div>
-                <div className="space-y-4 px-4 pb-22 pt-4 text-sm leading-7 text-zinc-700">
-                  <div className="max-w-[12.75rem] rounded-[1rem] bg-zinc-100 px-4 py-3">
-                    Hi Danny, I'm Quin, the digital assistant from Medsyra helping your nurses prepare for your upcoming surgery.
-                  </div>
-                  <div className="ml-auto max-w-[11rem] rounded-[1rem] bg-emerald-50 px-4 py-3 text-[#047857]">
-                    Can you text the medication instructions too?
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="absolute right-5 top-[10.6rem] z-30 w-[11.5rem] rounded-[1.2rem] border border-[#047857] bg-white shadow-[0_12px_30px_rgba(6,78,59,0.18)]">
-              <div className="rounded-t-[1.2rem] bg-[#065f46] px-4 py-3 text-sm font-semibold text-white">Document Requests</div>
-              <div className="space-y-4 p-4">
-                {Array.from({ length: 3 }).map((_, index) => (
-                  <div key={index} className="flex items-center gap-3">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#0ea5a8] text-white">✓</div>
-                    <div className="flex-1 space-y-2">
-                      <div className="h-1.5 w-full rounded-full bg-zinc-200" />
-                      <div className="h-1.5 w-[70%] rounded-full bg-zinc-200" />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+            ))}
+          </div>
+          <div className="mt-5 overflow-hidden rounded-[1.35rem] border border-white/8">
+            <img src="/mirror-assets/Featured-Img_9-Blog.jpg" alt="PAT workflow visual" className="aspect-[16/10] w-full object-cover" />
           </div>
         </div>
       </div>
@@ -884,13 +783,13 @@ type SolutionFeatureProps = {
 function SolutionFeature({ eyebrow, title, body, points, stat, statLabel, image, reverse = false, children }: SolutionFeatureProps) {
   return (
     <section className="bg-white pb-20">
-      <div className={`mx-auto grid max-w-7xl gap-14 px-5 md:px-8 lg:items-center ${reverse ? "lg:grid-cols-[1.18fr_0.82fr]" : "lg:grid-cols-[0.82fr_1.18fr]"}`}>
+      <div className="mx-auto grid max-w-7xl gap-10 px-5 md:px-8 lg:grid-cols-2 lg:items-start">
         <motion.div {...fadeUp} className={reverse ? "lg:order-2" : ""}>
           <div className="text-[0.8rem] font-semibold uppercase tracking-[0.28em] text-emerald-700">
             {eyebrow}
           </div>
-          <h2 className="mt-6 font-[family-name:var(--font-display)] text-[3.5rem] leading-[1.02] tracking-[-0.04em] text-[#08110e] md:text-[4.4rem]">{title}</h2>
-          <p className="mt-6 max-w-xl text-lg leading-8 text-[#2e2944]">{body}</p>
+          <h2 className="mt-6 max-w-[11ch] font-[family-name:var(--font-display)] text-[2.85rem] leading-[0.98] tracking-[-0.04em] text-[#08110e] md:text-[3.55rem]">{title}</h2>
+          <p className="mt-6 max-w-2xl text-lg leading-8 text-[#2e2944]">{body}</p>
           <div className="mt-8 rounded-[1.6rem] border border-emerald-100 bg-[#f6fbf8] p-6">
             <div className="text-[11px] font-bold uppercase tracking-[0.24em] text-emerald-700">Proven impact</div>
             <div className="mt-3 flex items-end gap-3">
@@ -898,13 +797,13 @@ function SolutionFeature({ eyebrow, title, body, points, stat, statLabel, image,
               <div className="max-w-[16rem] pb-1 text-sm leading-6 text-zinc-600">{statLabel}</div>
             </div>
           </div>
-          <div className="mt-8 space-y-4">
+          <div className="mt-8 grid gap-4">
             {points.map((point) => (
-              <div key={point} className="flex items-start gap-3 text-[#17342b]">
+              <div key={point} className="flex items-start gap-4 rounded-[1.35rem] border border-emerald-100 bg-[#f8fcfa] p-6 text-[#17342b]">
                 <div className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-emerald-700">
                   <CheckCircle2 className="h-4 w-4" />
                 </div>
-                <p className="text-base leading-7">{point}</p>
+                <p className="text-lg leading-8">{point}</p>
               </div>
             ))}
           </div>
@@ -913,9 +812,9 @@ function SolutionFeature({ eyebrow, title, body, points, stat, statLabel, image,
           </Link>
         </motion.div>
 
-        <motion.div {...fadeUp} transition={{ ...fadeUp.transition, delay: 0.08 }} className={reverse ? "lg:order-1" : ""}>
+        <motion.div {...fadeUp} transition={{ ...fadeUp.transition, delay: 0.08 }} className={`w-full ${reverse ? "lg:order-1" : ""}`}>
           {children ?? (
-            <div className="rounded-[2rem] border border-emerald-100 bg-[#f5faf7] p-5 shadow-[0_25px_70px_rgba(0,0,0,0.12)]">
+            <div className="w-full rounded-[2rem] border border-emerald-100 bg-[#f5faf7] p-5 shadow-[0_25px_70px_rgba(0,0,0,0.12)]">
               <img src={image} alt={title} className="w-full rounded-[1.6rem]" />
             </div>
           )}
@@ -928,32 +827,49 @@ function SolutionFeature({ eyebrow, title, body, points, stat, statLabel, image,
 function Solutions() {
   return (
     <section id="solutions">
-      <div className="bg-white pb-14">
-        <div className="mx-auto grid max-w-7xl gap-4 px-5 md:px-8 lg:grid-cols-3">
-          {solutionHighlights.map((item) => (
-            <motion.div
-              key={item.label}
-              {...fadeUp}
-              className="rounded-[1.75rem] border border-emerald-100 bg-[linear-gradient(180deg,#fbfffd_0%,#f2fbf6_100%)] p-6 shadow-[0_16px_40px_rgba(6,78,59,0.08)]"
-            >
-              <div className="text-[11px] font-bold uppercase tracking-[0.24em] text-emerald-700">{item.label}</div>
-              <div className="mt-4 font-[family-name:var(--font-display)] text-5xl leading-none text-[#08110e]">{item.value}</div>
-              <p className="mt-4 text-sm leading-7 text-zinc-600">{item.description}</p>
-            </motion.div>
-          ))}
+      <div className="bg-white pb-8 pt-2">
+        <div className="mx-auto max-w-7xl px-5 md:px-8">
+          <div className="grid gap-4 lg:grid-cols-5">
+            {[
+              "Inpatient Capacity",
+              "Surgical Growth",
+              "Perioperative Care",
+              "Care Gap + Coding",
+              "Architecture",
+            ].map((label, index) => (
+              <div key={label} className="rounded-[1.25rem] border border-emerald-100 bg-[#f5faf7] px-4 py-4 text-center text-[11px] font-bold uppercase tracking-[0.24em] text-emerald-800">
+                {index + 1}. {label}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
       <SolutionFeature
-        eyebrow="Surgical Growth"
-        title="Power strategic surgical growth"
-        body="So much more than just a scheduling tool, our Surgical Growth Solution harmonizes your growth strategy to your day-to-day operations, helping fill ORs with the cases that matter most."
-        stat="36%"
-        statLabel="robotics growth supported through better strategic case placement."
+        eyebrow="Inpatient Capacity Solution"
+        title="Reduce LOS and excess days from admission onward"
+        body="This suite focuses on reducing length of stay and excess days by automating discharge planning the moment a patient is admitted."
+        stat="24/7"
+        statLabel="capacity intelligence working continuously across labs, vitals, orders, notes, and care plans."
         points={[
-          "Match surgeon access, site-of-care rules, and block utilization to the growth opportunities that matter most.",
-          "Surface underused capacity fast enough for service-line leaders to act before demand slips away.",
-          "Turn strategic growth plans into operational workflows instead of leaving them trapped in reporting decks.",
+          "Discharge Planning Assistant auto-populates estimated discharge dates and dispositions into the EHR early in the stay.",
+          "Flow Prioritization Assistant sequences ancillary orders so discharge-critical work moves ahead of bottlenecks.",
+          "Care Gap Assistant and Case Manager Assistant help close barriers and summarize the last 24 hours for disposition planning.",
+        ]}
+      >
+        <InpatientCapacityVisual />
+      </SolutionFeature>
+
+      <SolutionFeature
+        eyebrow="Surgical Growth & Robotics Optimization"
+        title="Increase strategic surgical volume and maximize robotics utilization"
+        body="This suite is designed to grow surgical volume while making it easier to release, reassign, and fill OR time with the right cases."
+        stat="5"
+        statLabel="tools working together to find time, release blocks, and push the right cases forward."
+        points={[
+          "TimeFinder gives surgeons a mobile-friendly, EHR-agnostic way to view and request OR time quickly.",
+          "Block Release Assistant predicts unused blocks and nudges release before time is lost.",
+          "Available Time Outreach and Robotics Optimizer fill white space with strategic and robotic cases.",
         ]}
       >
         <SurgicalGrowthVisual />
@@ -961,14 +877,14 @@ function Solutions() {
 
       <SolutionFeature
         eyebrow="Perioperative Care Coordination"
-        title="Supercharge your PAT program"
-        body="Powered by our AI Operational Assistants, our Perioperative Care Coordination Solution gives every pre-admission testing team member their own admin who can effortlessly complete administrative tasks to optimize more patients for surgery and reduce surgery cancellations by up to 40%."
-        stat="40%"
-        statLabel="fewer surgery cancellations when readiness work is completed earlier."
+        title="Reduce cancellations with automated pre-admission testing support"
+        body="This solution automates the PAT process so teams can gather information, prioritize work, and prepare patients without adding administrative burden."
+        stat="60%"
+        statLabel="reduction in manual data entry through intelligent document management."
         points={[
-          "Automate patient outreach, prep reminders, and documentation follow-up without adding inbox work for nurses.",
-          "Identify missing labs, records, and readiness gaps before they become day-of-surgery surprises.",
-          "Keep PAT teams focused on clinical judgment while AI handles repetitive coordination work.",
+          "AI Patient Concierge reaches patients through voice, text, and email to gather intake information and answer questions.",
+          "Intelligent Document Management processes faxed, scanned, or emailed records to reduce manual data entry.",
+          "PAT Assist, workflow support, and continuous risk determination keep nurses focused on the right work at the right time.",
         ]}
         reverse
       >
@@ -976,19 +892,148 @@ function Solutions() {
       </SolutionFeature>
 
       <SolutionFeature
-        eyebrow="Inpatient Capacity"
-        title="Reduce excess days"
-        body="Our Inpatient Capacity Solution enables early, accurate discharge planning without adding burden to care teams, helping reduce LOS, increase capacity, and improve patient care."
-        stat="15-30%"
-        statLabel="excess-day reduction through earlier, better-coordinated discharge planning."
+        eyebrow="Care Gap and Coding Automation Suite"
+        title="Identify complex conditions and support accurate reimbursement"
+        body="This suite focuses on real-time identification of care gaps and conditions so teams can improve care quality and financial capture."
+        stat="MCC/CC"
+        statLabel="capture supported with better documentation and real-time clinical visibility."
         points={[
-          "Create a clearer daily plan for barriers, ownership, and discharge timing across units.",
-          "Improve visibility into which patients can move today and which blockers need intervention first.",
-          "Open capacity faster by coordinating throughput decisions before delays compound across the hospital.",
+          "Condition Detection Assistant finds risks for malnutrition, AKI, sepsis, delirium, and congestive heart failure.",
+          "Care Gap Assistant pre-populates orders and prompts sign-off within the natural EHR workflow.",
+          "Coding and Documentation Assistant supports accurate clinical complexity documentation and denial reduction.",
         ]}
       >
-        <InpatientCapacityVisual />
+        <div className="rounded-[2rem] border border-emerald-100 bg-[#f6fbf8] p-6 shadow-[0_25px_70px_rgba(6,78,59,0.12)]">
+          <div className="grid min-h-[28rem] gap-5 rounded-[1.6rem] border border-white bg-white p-5 shadow-sm lg:grid-cols-[1.1fr_0.9fr]">
+            <div className="space-y-4">
+              <div className="overflow-hidden rounded-[1.4rem] border border-emerald-100 bg-[#07100d]">
+                <img src="/mirror-assets/Featured-Img_6-Blog-1.png" alt="Care gap workflow visual" className="aspect-[16/10] w-full object-cover" />
+              </div>
+              <div className="grid gap-3 sm:grid-cols-3">
+                <div className="rounded-2xl border border-emerald-100 bg-[#fbfdfc] p-4">
+                  <div className="text-[11px] uppercase tracking-[0.2em] text-emerald-700">Detected gaps</div>
+                  <div className="mt-2 text-3xl font-semibold text-[#08110e]">18</div>
+                </div>
+                <div className="rounded-2xl border border-emerald-100 bg-[#fbfdfc] p-4">
+                  <div className="text-[11px] uppercase tracking-[0.2em] text-emerald-700">Orders queued</div>
+                  <div className="mt-2 text-3xl font-semibold text-[#08110e]">42</div>
+                </div>
+                <div className="rounded-2xl border border-emerald-100 bg-[#fbfdfc] p-4">
+                  <div className="text-[11px] uppercase tracking-[0.2em] text-emerald-700">Risk level</div>
+                  <div className="mt-3 h-2 rounded-full bg-zinc-200">
+                    <div className="h-2 w-[68%] rounded-full bg-emerald-500" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="rounded-[1.4rem] border border-zinc-100 bg-[#08110e] p-6 text-white">
+              <div className="text-[11px] font-bold uppercase tracking-[0.2em] text-emerald-300">Care Gap Workflow</div>
+              <div className="mt-5 space-y-4">
+                {[
+                  "Real-time condition detection from structured and unstructured data.",
+                  "Order pre-population for missing consults and workup.",
+                  "Impact visibility for response rates, revenue gains, and audit support.",
+                ].map((item) => (
+                  <div key={item} className="rounded-2xl border border-white/8 bg-white/5 px-4 py-4 text-sm leading-7 text-zinc-200">
+                    {item}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
       </SolutionFeature>
+
+      <SolutionFeature
+        eyebrow="Technical Architecture Requirements"
+        title="Deploy assistants inside and outside the EHR"
+        body="The platform is designed to feel native in Epic or Cerner while also working across independent clinics and web-based systems."
+        stat="EHR"
+        statLabel="embedding, leadership controls, and analytics in one operational platform."
+        points={[
+          "EHR embedding via MPages or Smart on FHIR so the experience feels native to the care team.",
+          "A Strategic Control Panel for deploying assistants, fine-tuning logic, and aligning with health system goals.",
+          "An Insights Suite and EHR-agnostic connectivity for executive monitoring and broader integration coverage.",
+        ]}
+        reverse
+      >
+        <div className="rounded-[2rem] border border-emerald-100 bg-[#06110d] p-6 shadow-[0_25px_70px_rgba(6,78,59,0.12)]">
+          <div className="rounded-[1.6rem] border border-white/8 bg-[#07100d] p-6 text-white">
+            <div className="text-[11px] font-bold uppercase tracking-[0.24em] text-emerald-300">Architecture</div>
+            <div className="mt-5 space-y-4 text-sm leading-7 text-zinc-300">
+              <div className="rounded-2xl border border-white/8 bg-white/5 px-4 py-4">Embedded EHR workflows</div>
+              <div className="rounded-2xl border border-white/8 bg-white/5 px-4 py-4">Leadership control panel</div>
+              <div className="rounded-2xl border border-white/8 bg-white/5 px-4 py-4">Executive insights and connectivity</div>
+            </div>
+          </div>
+        </div>
+      </SolutionFeature>
+    </section>
+  );
+}
+
+function HomeSolutionsPreview() {
+  const items = [
+    {
+      title: "Inpatient Capacity",
+      copy: "Automate discharge planning from admission, surface barriers sooner, and help teams move patients through the stay with less manual follow-up.",
+      image: "/mirror-assets/Inpatient-care.png",
+    },
+    {
+      title: "Surgical Growth",
+      copy: "Find OR time faster, predict unused blocks, and direct strategic cases into the openings that support growth and robotics utilization.",
+      image: "/mirror-assets/surgical-services-1.png",
+    },
+    {
+      title: "Perioperative Care",
+      copy: "Support PAT teams with outreach, document handling, and risk detection so patients are better prepared before surgery day arrives.",
+      image: "/mirror-assets/Leadership-1024x900.png",
+    },
+    {
+      title: "Care Gap + Coding",
+      copy: "Detect conditions early, pre-populate useful actions, and improve documentation so quality and reimbursement signals are captured cleanly.",
+      image: "/mirror-assets/Featured-Img_15-Blog.jpg",
+    },
+    {
+      title: "Architecture",
+      copy: "Embed inside the EHR while connecting leadership controls, real-time insights, and broader integrations across systems.",
+      image: "/mirror-assets/AdobeStock_321233603-1-1.png",
+    },
+  ];
+
+  return (
+    <section className="bg-[#020504] py-18 md:py-20">
+      <div className="mx-auto max-w-7xl px-5 md:px-8">
+        <div className="grid gap-6 lg:grid-cols-[0.72fr_1.28fr] lg:items-start">
+          <div className="rounded-[1.5rem] border border-white/8 bg-[#08110e] p-6">
+            <div className="text-[11px] font-bold uppercase tracking-[0.24em] text-emerald-300">Solutions</div>
+            <h3 className="mt-4 max-w-[11ch] font-[family-name:var(--font-display)] text-3xl leading-[0.98] text-white md:text-4xl">
+              Five operational solution areas
+            </h3>
+            <p className="mt-4 text-sm leading-7 text-zinc-300">
+              The home page now shows the full portfolio horizontally instead of stacking one long column.
+            </p>
+          </div>
+
+          <div className="grid gap-5 lg:grid-cols-2">
+            {items.map((item, index) => (
+              <div
+                key={item.title}
+                className="overflow-hidden rounded-[1.35rem] border border-white/8 bg-[#08110e]"
+              >
+                <div className="grid h-full gap-0 md:grid-cols-[0.9fr_1.1fr] md:items-stretch">
+                  <img src={item.image} alt={item.title} className="min-h-[14rem] w-full object-cover" />
+                  <div className="flex flex-col justify-center space-y-3 p-6">
+                    <div className="text-[11px] font-bold uppercase tracking-[0.24em] text-emerald-300">{item.title}</div>
+                    <p className="text-base leading-8 text-zinc-300">{item.copy}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
     </section>
   );
 }
@@ -1682,18 +1727,118 @@ function Footer() {
             <div className="font-[family-name:var(--font-display)] text-2xl">Medsyra</div>
           </Link>
           <p className="mt-4 max-w-md text-sm leading-7 text-zinc-400">
-            Hospital operations software for care teams that need smoother patient flow, stronger visibility, and faster action.
+            AI teammates for hospital operations for care teams that need smoother patient flow, stronger visibility, and faster action.
           </p>
         </div>
         <div className="space-y-2 text-sm text-zinc-400">
-          <div>rahul@Medsyra.com</div>
+          <div>rahul@medsyra.com</div>
           <div>+91 (79) 7841-2095</div>
-          <div>&copy; 2026 Medsyra. All rights reserved.</div>
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+            <span>&copy; 2026 Medsyra. All rights reserved.</span>
+            <Link to={routes.privacyPolicy} className="text-white underline decoration-white/40 underline-offset-4 transition-colors hover:text-emerald-300">
+              Privacy Policy
+            </Link>
+            <span>and</span>
+            <Link to={routes.termsOfUse} className="text-white underline decoration-white/40 underline-offset-4 transition-colors hover:text-emerald-300">
+              Terms of Use
+            </Link>
+          </div>
         </div>
       </div>
     </footer>
   );
 }
+
+function LegalPage({ title, updated, body }: { title: string; updated: string; body: string }) {
+  return (
+    <main>
+      <PageHero
+        eyebrow="Legal"
+        title={title}
+        body={`Last updated: ${updated}`}
+        accent="#10b981"
+      />
+      <section className="px-5 pb-20 md:px-8">
+        <div className="mx-auto max-w-4xl rounded-[1.5rem] border border-white/8 bg-white/4 p-6 text-sm leading-7 text-zinc-200 md:p-8">
+          <pre className="whitespace-pre-wrap font-sans">{body}</pre>
+        </div>
+      </section>
+    </main>
+  );
+}
+
+const privacyPolicyText = `Last updated: July 2026
+This notice describes how Personal Data about you may be used and disclosed and how you can obtain access to this information. Please review it carefully.
+
+INTRODUCTION
+We at Medsyra, Inc. value your privacy and are committed to keeping your personal data confidential. We use your data collected on the Medsyra website solely in the context of providing the website and providing all relevant content to website users.
+
+Privacy Policy Applicability
+This Privacy Policy applies to personal data that Medsyra collects from Users of the Medsyra Site. The term "Personal Data" includes any information that can be used on its own or with other information in combination to identify or contact one of our Users.
+
+We believe that privacy and transparency about the use of your Personal Data are of utmost importance. Therefore, our privacy practices are intended to comply with all applicable federal and state laws related to privacy. Additionally, in this Privacy Policy, we provide you detailed information about our collection, use, maintenance, and disclosure of your Personal Data. The Privacy Policy explains what kind of information we collect, when and how we might use your Personal Data, how we protect Personal Data, and your rights regarding your Personal Data.
+
+For additional information related to how we use and disclose your Personal Data please contact us at privacy@medsyra.com.
+
+Agreement to Privacy Policy Terms
+BY ACCESSING AND/OR USING THE SITE, YOU ARE ACKNOWLEDGING THAT YOU HAVE READ AND AGREE TO THE TERMS OF THIS PRIVACY POLICY. IF YOU DO NOT AGREE, YOU MUST IMMEDIATELY CEASE USING THE SITE.
+
+Privacy Policy Updates
+Please note that we occasionally update this Privacy Policy, and it is your responsibility to stay up to date with any amended versions. Any revisions to the Privacy Policy will be posted on the Medsyra Site. Any changes to this Privacy Policy will be effective immediately upon posting a new version of the Privacy Policy on our Site. We will change the "Last Updated" date above and the changes will apply to all Personal Data that we maintain, use, and disclose. If you continue to use the Site following such posting, you are agreeing to those changes.
+
+Personal Data Deletion
+If at any point you no longer agree to the use and disclosure of Personal Data, as described in this Privacy Policy, discontinue all further use of the Site and send a deletion request to privacy@medsyra.com.
+
+Questions or Concerns
+If you have any questions or concerns after reading this Privacy Policy, please do not hesitate to contact us at privacy@medsyra.com.
+
+COLLECTION AND USE OF PERSONAL DATA
+We collect demographic data, support data, and technology data from users. We use this information to provide the Site, fulfill our obligations under the Terms of Use, communicate with you about our services, maintain and improve our operations, and protect our rights and the security of the Site.
+
+Medsyra may share Personal Data with business partners and vendors, advisors, third parties in connection with business transfers, and government or law enforcement authorities where required by law.
+
+USER RIGHTS
+As a user of Medsyra's Site, you have certain rights relating to your Personal Data. These rights may include the right to access, erase, restrict, object, transfer, receive, and rectify personal data, subject to local privacy laws.
+
+PROTECTION OF PERSONAL DATA
+Medsyra understands the importance of data confidentiality and security. We use a combination of reasonable physical, technical, and administrative security controls to maintain the security and integrity of your Personal Data.
+
+ADVERTISING, MARKETING, AND TRACKING
+Medsyra may use your Personal Data to contact you with newsletters, marketing, or promotion materials and other information that may be of interest to you. You may opt out of receiving marketing materials at any time.
+
+CONTACT US
+If you have questions regarding this Privacy Policy, you may contact us at privacy@medsyra.com.`;
+
+const termsOfUseText = `Terms of Use
+Effective: August 2024
+Last Updated: August 2024
+
+These Terms are a legal contract between you and Medsyra. Medsyra is the creator of the Site and provides information about the company and its services through the Site. These Terms govern your use of the Site and apply to the individuals accessing the Site and any organizations for whom they act as agents or employees.
+
+BY USING THE SITE, YOU ARE CONSENTING TO BE BOUND BY THESE TERMS. IF YOU DO NOT AGREE, DO NOT USE THE SITE.
+
+ARBITRATION NOTICE: except for certain disputes described in the dispute resolution section, you agree that disputes between you and Medsyra will be resolved by binding, individual arbitration and you waive your right to participate in a class action lawsuit or class-wide arbitration.
+
+WHO OWNS THE SITE AND PERSONAL DATA?
+Medsyra and its licensors own the Site, including all content and functionality you access through the Site. Subject to your compliance with these Terms, Medsyra grants you a limited, revocable license to use the Site.
+
+WHAT ARE YOU NOT ALLOWED TO DO WITH THE SITE?
+You may use the Site only for lawful purposes and in accordance with these Terms. You shall not provide false information, harvest information from the Site, impair the Site, violate applicable law, or attempt to reverse-engineer the Site.
+
+THIRD-PARTY SITES AND SERVICES
+If you access third-party services through the Site, you may be subject to additional terms and privacy policies. Medsyra is not responsible for those third-party services.
+
+WARRANTY DISCLAIMERS AND LIMITATION OF LIABILITY
+The Site is provided "as is" without warranty of any kind. To the maximum extent permitted by law, Medsyra will not be liable for incidental, special, exemplary, or consequential damages arising out of your use of the Site.
+
+INDEMNIFICATION
+You agree to indemnify, defend, and hold harmless Medsyra and its representatives from any liability, loss, claim, suit, damage, and expense arising out of or in any way connected with your access to or use of the Site, your violation of these Terms, or any negligent or wrongful conduct by you.
+
+GENERAL CONTRACT TERMS
+These Terms, the Privacy Policy, and any other terms incorporated by reference constitute the entire agreement between Medsyra and you regarding the Site. The Terms are governed by the laws of the State of Delaware.
+
+Contacting Medsyra.
+Please feel free to contact us if you have any questions about these Terms and/or any other documents referenced in these Terms. You may contact us at privacy@medsyra.com.`;
 
 function ScrollToTop() {
   const location = useLocation();
@@ -1752,7 +1897,7 @@ function HomePage() {
       <Hero />
       <ImpactSection />
       <SolutionsIntro />
-      <Solutions />
+      <HomeSolutionsPreview />
       <CareAreas />
       <ClientSpotlightInline />
       <Explore />
@@ -1807,6 +1952,14 @@ function ContactPage() {
   );
 }
 
+function PrivacyPolicyPage() {
+  return <LegalPage title="Privacy Policy" updated="July 2026" body={privacyPolicyText} />;
+}
+
+function TermsOfUsePage() {
+  return <LegalPage title="Terms of Use" updated="August 2024" body={termsOfUseText} />;
+}
+
 export default function App() {
   return (
     <Routes>
@@ -1815,6 +1968,8 @@ export default function App() {
         <Route path={routes.solutions} element={<SolutionsPage />} />
         <Route path={routes.careAreas} element={<CareAreasPage />} />
         <Route path={routes.contact} element={<ContactPage />} />
+        <Route path={routes.privacyPolicy} element={<PrivacyPolicyPage />} />
+        <Route path={routes.termsOfUse} element={<TermsOfUsePage />} />
       </Route>
     </Routes>
   );

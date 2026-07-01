@@ -4,6 +4,7 @@ dist/
 coverage/
 .DS_Store
 *.log
+PROJECT_STATUS_LOCAL.md
 .env*
 !.env
 .env
